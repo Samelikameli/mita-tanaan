@@ -1,11 +1,14 @@
 import "./App.css";
 
+import type { FirebaseApp } from "firebase/app";
+
 type Props = {
-    moi: string;
+    app: FirebaseApp;
 };
 
-const App = ({ moi }: Props) => {
-    console.log(moi);
+const App = ({ app }: Props) => {
+    console.log(app);
+
     return <div>Tästä tulee hyvä pöhinä</div>;
 };
 
