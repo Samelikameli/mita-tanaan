@@ -9,13 +9,13 @@ export type User = {
     location: GeoPoint;
 };
 
-const useUser = (): {
+const useUserFetching = (): {
     userExists: boolean;
     loading: boolean;
     user: User | null;
     register: (user: User) => Promise<void>;
 } => {
-    const { app } = useContext(AppContext);
+    const app = useContext(AppContext);
     const db = getFirestore(app);
 
     const [userid, setUserid] = useState<string | null>(localStorage.getItem("userid"));
@@ -64,4 +64,4 @@ const useUser = (): {
     };
 };
 
-export { useUser };
+export { useUserFetching };
