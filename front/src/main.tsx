@@ -1,12 +1,11 @@
-import React from "react";
+import React, { createContext } from "react";
 import ReactDOM from "react-dom/client";
 import { ChakraProvider } from "@chakra-ui/react";
 import { extendTheme } from "@chakra-ui/react";
 import { initializeApp } from "firebase/app";
 import App from "./App.tsx";
 import "./index.css";
-
-const app = initializeApp(JSON.parse(import.meta.env.VITE_FIREBASE_AUTH ?? ""));
+import AppContext from "./appcontext.tsx";
 
 // 2. Extend the theme to include custom colors, fonts, etc
 const colors = {
@@ -17,13 +16,17 @@ const colors = {
     },
 };
 
+const app = initializeApp(JSON.parse(import.meta.env.VITE_FIREBASE_AUTH ?? ""));
+
 const theme = extendTheme({ colors });
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
     <React.StrictMode>
-        <ChakraProvider theme={theme}>
-            <App app={app} />
-        </ChakraProvider>
+        <AppContext.Provider value={app}>
+            <ChakraProvider theme={theme}>
+                <App />
+            </ChakraProvider>
+        </AppContext.Provider>
     </React.StrictMode>,
 );
 
