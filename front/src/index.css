@@ -1,11 +1,14 @@
 
 html.desktop {
 	height: 100%;
+	font-size: 3vh; /* CHANGE THIS TO CHANGE THE SCALING */
+	overflow: hidden;
 }
 
 html.desktop body {
 	background-color: #aaaaaa;
 	height: 100%;
+	overflow: hidden;
 }
 
 html.desktop #phone {
@@ -14,7 +17,7 @@ html.desktop #phone {
 	margin: 1rem auto;
 	padding: 0.5rem;
 	border-radius: 1rem;
-	height: calc(100% - 2rem);
+	height: calc(100% - 4rem);
 }
 
 html.desktop #root {
