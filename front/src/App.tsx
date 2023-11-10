@@ -1,3 +1,4 @@
+import { Button } from "@chakra-ui/react";
 import "./App.css";
 
 import type { FirebaseApp } from "firebase/app";
@@ -14,7 +15,10 @@ const App = ({ app }: Props) => {
 
     if (loading) return <div>Loading</div>;
 
-    return <div>Tästä tulee hyvä pöhinä</div>;
+    return <div>
+        Tästä tulee hyvä pöhinä
+        <Button colorScheme="blue">Button</Button>
+    </div>;
 };
 
 export default App;
