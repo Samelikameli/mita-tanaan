@@ -1,11 +1,11 @@
-import React, { createContext } from "react";
+import React from "react";
 import ReactDOM from "react-dom/client";
-import { ChakraProvider } from "@chakra-ui/react";
-import { extendTheme } from "@chakra-ui/react";
+import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import { initializeApp } from "firebase/app";
-import App from "./App.tsx";
 import "./index.css";
 import AppContext from "./appcontext.tsx";
+import { useUser } from "./controllers/user.tsx";
+import App from "./App.tsx";
 
 // 2. Extend the theme to include custom colors, fonts, etc
 const colors = {

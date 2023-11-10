@@ -1,7 +1,6 @@
-import type { FirebaseApp } from "firebase/app";
 import type { GeoPoint } from "firebase/firestore";
-import { collection, doc, getDoc, setDoc, getFirestore, addDoc } from "firebase/firestore";
-import { useContext, useEffect, useMemo, useState } from "react";
+import { addDoc, collection, doc, getDoc, getFirestore } from "firebase/firestore";
+import { useContext, useEffect, useState } from "react";
 import AppContext from "../appcontext.tsx";
 
 export type User = {
@@ -11,56 +10,58 @@ export type User = {
 };
 
 const useUser = (): {
-    user: User | null;
-    loading: boolean;
     userExists: boolean;
+    loading: boolean;
+    user: User | null;
+    register: (user: User) => Promise<void>;
 } => {
-    const app = useContext(AppContext);
+    const { app } = useContext(AppContext);
+    const db = getFirestore(app);
 
-    const userid = localStorage.getItem("userid");
-    const db = useMemo(() => getFirestore(app), [app]);
+    const [userid, setUserid] = useState<string | null>(localStorage.getItem("userid"));
+    useEffect(() => {
+        if (userid != null) {
+            localStorage.setItem("userid", userid);
+        }
+    }, [userid]);
 
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
-        (async () => {
-            const usersRef = collection(db, "users");
-            if (userid != null) {
-                const snapshot = await getDoc(doc(usersRef, userid ?? ""));
-
+        setLoading(true);
+        const usersRef = collection(db, "users");
+        if (userid != null) {
+            getDoc(doc(usersRef, userid ?? "")).then(snapshot => {
                 if (snapshot.exists()) {
-                    setUser(snapshot.data() as User);
-                    //     console.log(snapshot.data());
+                    console.log("exists");
+                    const data = snapshot.data();
+                    console.log(data);
+                    setUser(data as User);
                 }
                 setLoading(false);
-            } else {
-                setLoading(false);
-            }
-        })().catch(console.error);
-    }, [db, userid]);
-
-    return {
-        user,
-        loading,
-        userExists: !loading && user != null,
-    };
-};
-
-const useUserRegistration = (): { register: (user: User) => Promise<void> } => {
-    const app = useContext(AppContext);
-
-    const db = useMemo(() => getFirestore(app), [app]);
+            });
+        } else {
+            setLoading(false);
+        }
+    }, [db, userid, setUser]);
 
     const register = async (user: User) => {
         const usersRef = collection(db, "users");
         const newUser = await addDoc(usersRef, user);
         const newUserId = newUser.id;
         console.log("created user with id", newUserId);
-        localStorage.setItem("userid", newUserId);
+        setUserid(newUserId);
     };
 
-    return { register };
+    console.log("in user hook", user, loading);
+
+    return {
+        user,
+        loading,
+        userExists: !loading && user != null,
+        register,
+    };
 };
 
-export { useUser, useUserRegistration };
+export { useUser };
