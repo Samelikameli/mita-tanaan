@@ -1,4 +1,26 @@
 
-#root {
+html.desktop {
+	height: 100%;
+}
 
+html.desktop body {
+	background-color: #aaaaaa;
+	height: 100%;
+}
+
+html.desktop #phone {
+	background-color: black;
+	max-width: 50vh;
+	margin: 1rem auto;
+	padding: 0.5rem;
+	border-radius: 1rem;
+	height: calc(100% - 2rem);
+}
+
+html.desktop #root {
+	border-radius: 0.5rem;
+	background-color: white;
+	height: 100%;
+	overflow-x: hidden;
+	overflow-y: auto;
 }

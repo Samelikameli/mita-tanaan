@@ -26,3 +26,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         </ChakraProvider>
     </React.StrictMode>,
 );
+
+if (window.innerHeight < window.innerWidth) {
+    document.body.parentElement?.classList.add("desktop");
+} else {
+    document.body.parentElement?.classList.add("mobile");
+}
