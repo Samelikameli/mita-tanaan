@@ -49,13 +49,20 @@ exports.onUserWrite = onDocumentWritten({ document: "users/{userId}", location: 
     const userRef = admin.firestore().collection('users').doc(userId);
     const user = await userRef.get();
     const userLocation = user.data().location;
+    const username = user.data().name;
+
 
     const users = await admin.firestore().collection('users').get();
     const nearbyUsers = [];
+    
     for(const user of users.docs) {
         const location = user.data().location;
+        if (!location) {
+            continue;
+        }
         const distance = getDistanceFromLatLonInKm(userLocation.latitude, userLocation.longitude, location.latitude, location.longitude);
-        if(distance < 5) {
+        console.log(distance + " " + user.data().name);
+        if(distance < 5 && 'name' in user.data() &&  user.data().name !== username) {
             nearbyUsers.push(user.data());
         }
     }
@@ -70,13 +77,17 @@ exports.getNearbyUsers = onRequest({ location: "europe-north1" }, async (request
     const userRef = admin.firestore().collection('users').doc(userId);
     const user = await userRef.get();
     const userLocation = user.data().location;
+    const username = user.data().name;
 
     const users = await admin.firestore().collection('users').get();
     const nearbyUsers = [];
     for(const user of users.docs) {
         const location = user.data().location;
+        if (!location) {
+            continue;
+        }
         const distance = getDistanceFromLatLonInKm(userLocation.latitude, userLocation.longitude, location.latitude, location.longitude);
-        if(distance < 5) {
+        if(distance < 5 && 'name' in user.data() && user.data().name !== username) {
             nearbyUsers.push(user.data());
         }
     }
