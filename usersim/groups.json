@@ -2,19 +2,23 @@
     "groups":[
         {
             "name": "Ruoholahden ala-asteen 3B",
-            "member_count": 20
+            "member_count": 20,
+            "avatar": "panda"
         },
         {
             "name": "Best group",
-            "member_count": 5
+            "member_count": 5,
+            "avatar": "panda"
         },
         {
             "name": "Worst group",
-            "member_count": 1
+            "member_count": 1,
+            "avatar": "panda"
         },
         {
             "name": "Kaverit",
-            "member_count": 3
+            "member_count": 3,
+            "avatar": "panda"
         }
     ]
 }

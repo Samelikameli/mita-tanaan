@@ -29,3 +29,15 @@ docs = groups_ref.stream()
 # Delete all groups
 for doc in docs:
     doc.reference.delete()
+
+challenges_ref = db.collection(u'challenges')
+docs = challenges_ref.stream()
+# Delete all challenges
+for doc in docs:
+    doc.reference.delete()
+
+# Delete all activities
+activities_ref = db.collection(u'activities')
+docs = activities_ref.stream()
+for doc in docs:
+    doc.reference.delete()
