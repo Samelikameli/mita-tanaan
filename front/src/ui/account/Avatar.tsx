@@ -16,6 +16,7 @@ const faces = {
     koala,
     lion,
     panda,
+    "panda,jpg": panda,
     pig,
     tiger,
 };
@@ -24,9 +25,17 @@ import { Image } from "@chakra-ui/react";
 
 type Props = {
     animal: keyof faces;
+    small?: boolean;
 };
-const Avatar = ({ animal }: Props) => {
-    return <Image src={faces[animal] as string} boxSize={"160px"} objectFit={"cover"}></Image>;
+const Avatar = ({ animal, small }: Props) => {
+    if (faces[animal] == null) console.log(animal);
+    return (
+        <Image
+            filter={`drop-shadow(0px 0px ${small ? 1 : 5}px gray)`}
+            src={faces[animal] as string}
+            boxSize={small ? "24px" : "160px"}
+            objectFit={"cover"}></Image>
+    );
 };
 
 export default Avatar;

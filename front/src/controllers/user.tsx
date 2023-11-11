@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import AppContext from "../appcontext.tsx";
 
 export type User = {
+    id: string;
     name: string;
     avatar: string;
     location: GeoPoint;
@@ -36,8 +37,9 @@ const useUserFetching = (): {
                 if (snapshot.exists()) {
                     console.log("exists");
                     const data = snapshot.data();
+                    const id = snapshot.id;
                     console.log(data);
-                    setUser(data as User);
+                    setUser({ ...data, id } as User);
                 }
                 setLoading(false);
             });
