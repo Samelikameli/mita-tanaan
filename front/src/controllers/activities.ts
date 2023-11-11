@@ -56,8 +56,12 @@ const useActivities = () => {
 
         const unsubscribe = onSnapshot(q, (snapshot: QuerySnapshot<DocumentData>) => {
             const updatedActivities: Activity[] = [];
-            snapshot.forEach((doc: QueryDocumentSnapshot<unknown>) => updatedActivities.push(doc.data() as Activity));
+            snapshot.forEach((doc: QueryDocumentSnapshot<unknown>) => {
+                const data = doc.data();
+                return updatedActivities.push({ id: doc.id, ...data, votes: JSON.parse(data.votes) } as Activity);
+            });
 
+            console.log(updatedActivities);
             setAllActivities(updatedActivities);
             console.log("Updated activities!");
         });

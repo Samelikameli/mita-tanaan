@@ -28,7 +28,7 @@ const OngoingActivityView = () => {
         if (activity?.ongoing) {
             navigate("/silent");
         }
-    }, [activity?.ongoing]);
+    }, [activity?.ongoing, navigate]);
 
     if (isLoading) {
         return <p>Loading</p>;
