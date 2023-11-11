@@ -19,6 +19,7 @@ export type Activity = {
     customTime: string | null;
     owner: string;
     votes: Array<VoteCount>;
+    group: Array<string>;
 };
 
 type fetchActivitiesQueryKey = ["activities", string | undefined];
@@ -67,6 +68,7 @@ const useCreateActivity = () => {
             time: activity.time,
             customTime: activity.customTime || null,
             votes: [],
+            group: [],
             owner: user?.name,
         });
         return id;
