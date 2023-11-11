@@ -1,58 +1,53 @@
-import {
-    Card,
-    CardBody,
-    CardFooter,
-    CardHeader,
-    Container,
-    Grid,
-    GridItem,
-    Heading,
-    IconButton,
-    ListItem,
-    SlideFade,
-    Text,
-    UnorderedList,
-} from "@chakra-ui/react";
+import { Button, Card, HStack, Heading, SlideFade, Text, VStack } from "@chakra-ui/react";
 import ViewFadeWrapper, { PAGE_CHANGE_ANIM } from "../ViewFadeWrapper.tsx";
-import { AddIcon } from "@chakra-ui/icons";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 
-const MyCard = ({ onClick, text }) => {
+const MyCard = ({ text, to }: { text: string; to: string }) => {
     return (
-        <Card mx={4} h={"100%"}>
-            <CardHeader>
-                <Heading>{text}</Heading>
-            </CardHeader>
-            <CardBody>
-                <Text>Favorites</Text>
-                <UnorderedList>
-                    <ListItem>Bsasketball</ListItem>
-                    <ListItem>Bsasketball</ListItem>
-                </UnorderedList>
-            </CardBody>
-            <CardFooter>
-                <Container centerContent>
-                    <IconButton size={"lg"} isRound={true} fontSize="20px" icon={<AddIcon />} aria-label={"create"} onClick={onClick}></IconButton>
-                </Container>
-            </CardFooter>
-        </Card>
+        <Link to={to}>
+            <Card mx={4} p={4} background="linear-gradient(0deg, #0070F3, #3993FC)" color="white" height="20vh" justifyContent="center">
+                <Heading fontSize="lg" textAlign="center">
+                    {text}
+                </Heading>
+            </Card>
+        </Link>
+    );
+};
+
+const OngoingNotification = () => {
+    const navigate = useNavigate();
+    return (
+        <HStack background="green.600" color="white" padding="2">
+            <VStack alignItems="left" flex="1" spacing="0">
+                <Text color="#ffffff" fontSize="sm" fontWeight="bold">
+                    Ongoing activity
+                </Text>
+                <Text color="#ffffff" fontSize="lg" fontWeight="bold">
+                    Football
+                </Text>
+            </VStack>
+            <Button variant="outline" colorScheme="white" onClick={() => navigate("/ongoing")}>
+                Open
+            </Button>
+        </HStack>
     );
 };
 
 const CreateView = () => {
-    const navigate = useNavigate();
+    const [showOngoing, setShowOngoing] = useState(-1);
     return (
-        <ViewFadeWrapper styleAbsolutely={false}>
-            <SlideFade in={true} offsetX={100} offsetY={0} delay={PAGE_CHANGE_ANIM} style={{ height: "100%" }}>
-                <Grid color={"white"} h={"100%"} gap={6}>
-                    <GridItem>
-                        <MyCard text={"Activities"} onClick={() => navigate("/activities/create")} />
-                    </GridItem>
-                    <GridItem>
-                        <MyCard text={"Challenges"} />
-                    </GridItem>
-                </Grid>
-            </SlideFade>
+        <ViewFadeWrapper styleAbsolutely={true}>
+            <VStack height="100%" alignItems="stretch" spacing="0" justifyContent="space-between" onDoubleClick={() => setShowOngoing(i => i + 1)}>
+                {showOngoing > 0 ? <OngoingNotification /> : <span></span>}
+                <SlideFade in={true} offsetX={100} offsetY={0} delay={PAGE_CHANGE_ANIM}>
+                    <MyCard text={"What are we doing today?"} to="/activities/create" />
+                </SlideFade>
+                <SlideFade in={true} offsetX={100} offsetY={0} delay={PAGE_CHANGE_ANIM + 0.4}>
+                    <MyCard text={"Start a challenge"} to="/challenges" />
+                </SlideFade>
+                <span></span>
+            </VStack>
         </ViewFadeWrapper>
     );
 };
