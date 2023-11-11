@@ -1,4 +1,9 @@
+import { collection, getFirestore, query } from "@firebase/firestore";
+import { useContext } from "react";
 import { useQuery } from "react-query";
+import AppContext from "../appcontext";
+import { firebaseApp } from "../main";
+import UserContext from "../usercontext";
 
 export type VoteCount = {
     emoji: string;
@@ -27,7 +32,15 @@ const mockActivities: Activity[] = [
     { id: "6", name: "Hengailu", owner: "Artur Skwarek", votes: mockVotes },
 ];
 
-const fetchActivities = async (): Promise<Activity[]> => {
+type fetchActivitiesQueryKey = ["activities", string | undefined];
+
+const fetchActivities = async ({ queryKey }: { queryKey: fetchActivitiesQueryKey }): Promise<Activity[]> => {
+    console.log(queryKey);
+    const db = getFirestore(firebaseApp);
+    const q = query(collection(db, "activities"));
+
+    console.log(q);
+
     await sleep(200);
     return mockActivities;
 };
@@ -36,6 +49,10 @@ function sleep(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-const useActivities = () => useQuery("activities", fetchActivities);
+const useActivities = () => {
+    const user = useContext(UserContext);
+    const queryKey: fetchActivitiesQueryKey = ["activities", user?.id];
+    return useQuery(queryKey, fetchActivities);
+};
 
 export { useActivities };

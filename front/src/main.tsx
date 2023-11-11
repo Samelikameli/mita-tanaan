@@ -32,3 +32,5 @@ if (window.innerHeight < window.innerWidth) {
 } else {
     document.body.parentElement?.classList.add("mobile");
 }
+
+export { app as firebaseApp };
