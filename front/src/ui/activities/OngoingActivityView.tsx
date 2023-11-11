@@ -3,7 +3,7 @@ import Map, { Marker } from "react-map-gl";
 
 import * as mapboxgl from "mapbox-gl";
 import { useEffect, useState } from "react";
-import { Box, Card, CardBody, GridItem, Grid, Flex, Text, CardHeader } from "@chakra-ui/react";
+import { Box, Card, CardBody, GridItem, Flex, Text, CardHeader } from "@chakra-ui/react";
 
 import useAllUsersLocation from "../../controllers/location.ts";
 import Avatar from "../account/Avatar.tsx";
@@ -21,8 +21,7 @@ const OngoingActivityView = () => {
     const navigate = useNavigate();
 
     const activity = isLoading ? null : activities[0];
-    // console.log(activity);
-    let timeModeToEmoji1 = timeModeToEmoji(activity?.time);
+    const timeModeToEmoji1 = timeModeToEmoji(activity?.time || null);
 
     useEffect(() => {
         if (activity?.ongoing) {

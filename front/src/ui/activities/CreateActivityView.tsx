@@ -32,7 +32,7 @@ const CreateActivityView = () => {
 
     return (
         <ViewFadeWrapper>
-            <Box padding={4} background="white" height="100%">
+            <Box padding={4} background="white" height="100%" overflowY="auto">
                 <form onSubmit={onSubmit}>
                     <Button colorScheme="gray" size="sm" onClick={() => navigate(-1)} type="button">
                         Cancel
