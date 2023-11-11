@@ -14,7 +14,7 @@ const useUserFetching = (): {
     userExists: boolean;
     loading: boolean;
     user: User | null;
-    register: (user: User) => Promise<void>;
+    register: (user: Omit<User, "id">) => Promise<void>;
 } => {
     const app = useContext(AppContext);
     const db = getFirestore(app);
@@ -48,7 +48,7 @@ const useUserFetching = (): {
         }
     }, [db, userid, setUser]);
 
-    const register = async (user: User) => {
+    const register = async (user: Omit<User, "id">) => {
         const usersRef = collection(db, "users");
         const newUser = await addDoc(usersRef, user);
         const newUserId = newUser.id;
