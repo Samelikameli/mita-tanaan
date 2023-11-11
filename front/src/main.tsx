@@ -5,8 +5,12 @@ import { initializeApp } from "firebase/app";
 import "./index.css";
 import AppContext from "./appcontext.tsx";
 import App from "./App.tsx";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 const app = initializeApp(JSON.parse(import.meta.env.VITE_FIREBASE_AUTH ?? ""));
+
+// Create a client
+const queryClient = new QueryClient();
 
 // Extend the theme to include custom colors, fonts, etc
 const theme = extendTheme({
@@ -40,11 +44,13 @@ const theme = extendTheme({
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
     <React.StrictMode>
-        <AppContext.Provider value={app}>
-            <ChakraProvider theme={theme}>
-                <App />
-            </ChakraProvider>
-        </AppContext.Provider>
+        <QueryClientProvider client={queryClient}>
+            <AppContext.Provider value={app}>
+                <ChakraProvider theme={theme}>
+                    <App />
+                </ChakraProvider>
+            </AppContext.Provider>
+        </QueryClientProvider>
     </React.StrictMode>,
 );
 
