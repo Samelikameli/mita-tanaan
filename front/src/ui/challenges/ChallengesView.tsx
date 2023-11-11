@@ -21,8 +21,8 @@ const listItem = {
     show: { opacity: 1 },
 };
 
-const ActivitiesView = () => {
-    const { data: activities } = useActivities();
+const ChallengesView = () => {
+    const { data: challenges } = useActivities();
 
     return (
         <ViewFadeWrapper>
@@ -30,30 +30,40 @@ const ActivitiesView = () => {
                 <Box padding="4" flex="1" overflowY="auto">
                     <SlideFade in={true} offsetX={100} offsetY={0} delay={PAGE_CHANGE_ANIM}>
                         <Heading fontSize="xl" paddingTop="5">
-                            What are we doing today?
+                            Can <b>you</b> do this?
                         </Heading>
                         <Text fontSize="m" paddingBottom="4">
-                            Here are your friends' suggestions
+                            Challenges sent by your friends
                         </Text>
                     </SlideFade>
                     {/*isLoading && <Text>Loading...</Text>*/}
-                    {activities && (
+                    {challenges && (
                         <motion.div variants={container} initial="hidden" animate="show">
                             <VStack spacing={4} align="stretch">
                                 <AnimatePresence>
-                                    {activities.map(a => (
+                                    {challenges.map(a => (
                                         <motion.div key={a.id} variants={listItem}>
-                                            <Suggestion activity={a} />
+                                            <ChallengeCard challenge={a} />
                                         </motion.div>
                                     ))}
                                 </AnimatePresence>
                             </VStack>
                         </motion.div>
                     )}
+                    <SlideFade in={true} offsetX={100} offsetY={0} delay={PAGE_CHANGE_ANIM}>
+                        <Heading fontSize="xl" paddingTop="5">
+                            Trending challenges
+                        </Heading>
+                        <Text fontSize="m" paddingBottom="4">
+                            Find and respond to challenges sent to you
+                        </Text>
+                    </SlideFade>
                 </Box>
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
                     <Box background="white" padding="3" textAlign="center" boxShadow="0 0 1rem rgba(0,0,0,0.3)" z-index="100" position="relative">
-                        <Button colorScheme="blue">Add new suggestion</Button>
+                        <Link to="/challenges/record">
+                            <Button colorScheme="blue">Create your own challenge</Button>
+                        </Link>
                     </Box>
                 </motion.div>
             </VStack>
@@ -61,11 +71,11 @@ const ActivitiesView = () => {
     );
 };
 
-const Suggestion = (props: { activity: Activity }) => {
-    const { id, name, owner, votes } = props.activity;
+const ChallengeCard = (props: { challenge: Activity }) => {
+    const { id, name, owner, votes } = props.challenge;
     return (
         <Card padding={2}>
-            <Link to={`/activities/${id}`}>
+            <Link to={`/challenges/${id}`}>
                 <HStack>
                     <EmojiIcon>⚽</EmojiIcon>
                     <VStack flex="1" alignItems="right" justifyContent="center" spacing={0}>
@@ -86,9 +96,9 @@ const Suggestion = (props: { activity: Activity }) => {
                     </Button>
                 ))}
                 <Box flex="1"></Box>
-                <Link to={`/activities/${id}`}>
+                <Link to={`/challenges/${id}`}>
                     <Button size="xs" colorScheme="blue">
-                        Open
+                        Watch
                     </Button>
                 </Link>
             </HStack>
@@ -96,4 +106,4 @@ const Suggestion = (props: { activity: Activity }) => {
     );
 };
 
-export default ActivitiesView;
+export default ChallengesView;
