@@ -13,6 +13,7 @@ import CreateActivityView from "./ui/activities/CreateActivityView.tsx";
 import ChallengesView from "./ui/challenges/ChallengesView.tsx";
 import SingleChallengeView from "./ui/challenges/SingleChallengeView.tsx";
 import RecordChallengeView from "./ui/challenges/RecordChallengeView.tsx";
+import HomeView from "./ui/home/HomeView.tsx";
 
 const App = () => {
     //TODO: rekisteröintintisivu jos !userExists
@@ -40,6 +41,7 @@ const AppRoutes = () => {
         <AnimatePresence initial={false}>
             <Routes location={location} key={location.pathname}>
                 <Route path="/" element={<IntroView />} />
+                <Route path="/home" element={<HomeView />} />
                 <Route path="/activities" element={<ActivitiesView />} />
                 <Route path="/activities/:id" element={<SingleActivityView />} />
                 <Route path="/activities/create" element={<CreateActivityView />} />

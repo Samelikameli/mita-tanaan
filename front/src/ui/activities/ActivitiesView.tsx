@@ -26,7 +26,7 @@ const ActivitiesView = () => {
 
     return (
         <ViewFadeWrapper>
-            <VStack background="orange.100" height="100%" alignItems="stretch" spacing="0">
+            <VStack height="100%" alignItems="stretch" spacing="0">
                 <Box padding="4" flex="1" overflowY="auto">
                     <SlideFade in={true} offsetX={100} offsetY={0} delay={PAGE_CHANGE_ANIM}>
                         <Heading fontSize="xl" paddingTop="5">
@@ -51,11 +51,11 @@ const ActivitiesView = () => {
                         </motion.div>
                     )}
                 </Box>
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
-                    <Box background="white" padding="3" textAlign="center" boxShadow="0 0 1rem rgba(0,0,0,0.3)" z-index="100" position="relative">
-                        <Button colorScheme="blue">Add new suggestion</Button>
-                    </Box>
-                </motion.div>
+                {/*<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>*/}
+                {/*    <Box background="white" padding="3" textAlign="center" boxShadow="0 0 1rem rgba(0,0,0,0.3)" z-index="100" position="relative">*/}
+                {/*        <Button colorScheme="blue">Add new suggestion</Button>*/}
+                {/*    </Box>*/}
+                {/*</motion.div>*/}
             </VStack>
         </ViewFadeWrapper>
     );
