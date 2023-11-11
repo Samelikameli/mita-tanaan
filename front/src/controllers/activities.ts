@@ -87,13 +87,14 @@ const useCreateActivity = () => {
     if (!user) throw Error("User not defined in useCreateActivity");
 
     return async (activity: { name: string; emoji: string; place: string; time: string; customTime: string | undefined }): Promise<string> => {
+        const initialVotes: VoteCount = { emoji: "👍", count: 1 };
         const id = await writeActivity({
             name: activity.name,
             emoji: activity.emoji,
             place: activity.place,
             time: activity.time,
             customTime: activity.customTime || null,
-            votes: JSON.stringify([]),
+            votes: JSON.stringify([initialVotes]),
             group: [],
             owner: user?.name,
         });
@@ -101,4 +102,14 @@ const useCreateActivity = () => {
     };
 };
 
-export { useActivities, useCreateActivity };
+/**
+ * Share the activity with the given groups. Existing groups will be overwritten.
+ */
+const modifyActivityGroups = async (activityId: string, groupsToShareWith: string[]) => {
+    const db = getFirestore(firebaseApp);
+    // Add a new document in collection "cities"
+    const ref = doc(db, "activities", activityId);
+    await setDoc(ref, { group: groupsToShareWith }, { merge: true });
+};
+
+export { useActivities, useCreateActivity, modifyActivityGroups };
