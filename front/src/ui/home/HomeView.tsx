@@ -11,17 +11,17 @@ const HomeView = () => {
 
     return (
         <Box style={{ height: "100%" }}>
-            <Box style={{ height: "calc(100% - 64px)" }}>{tabIndex === 0 ? <ActivitiesView /> : tabIndex === 1 ? <CreateView /> : null}</Box>
+            <Box style={{ height: "calc(100% - 68px)" }}>{tabIndex === 0 ? <ActivitiesView /> : tabIndex === 1 ? <CreateView /> : null}</Box>
 
-            <BottomNavigation value={tabIndex} onChange={setTabIndex} colorScheme={"white"} variant={"flat"} showLabel={"always"}>
+            <BottomNavigation value={tabIndex} onChange={setTabIndex} colorScheme={"white"} variant={"flat"} showLabel={"always"} p={4}>
                 <BottomNavigationItem>
-                    <BottomNavigationLabel>Activities</BottomNavigationLabel>
+                    <BottomNavigationLabel fontSize={"24px"}>🚀</BottomNavigationLabel>
                 </BottomNavigationItem>
                 <BottomNavigationItem>
-                    <BottomNavigationLabel>Create</BottomNavigationLabel>
+                    <BottomNavigationLabel fontSize={"24px"}>+</BottomNavigationLabel>
                 </BottomNavigationItem>
                 <BottomNavigationItem>
-                    <BottomNavigationLabel>Challenges</BottomNavigationLabel>
+                    <BottomNavigationLabel fontSize={"24px"}>🏆</BottomNavigationLabel>
                 </BottomNavigationItem>
             </BottomNavigation>
         </Box>

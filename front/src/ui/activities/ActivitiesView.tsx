@@ -25,7 +25,7 @@ const ActivitiesView = () => {
     const { data: activities } = useActivities();
 
     return (
-        <ViewFadeWrapper>
+        <ViewFadeWrapper styleAbsolutely={false}>
             <VStack height="100%" alignItems="stretch" spacing="0">
                 <Box padding="4" flex="1" overflowY="auto">
                     <SlideFade in={true} offsetX={100} offsetY={0} delay={PAGE_CHANGE_ANIM}>
