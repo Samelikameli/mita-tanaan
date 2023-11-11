@@ -1,0 +1,20 @@
+{
+    "groups":[
+        {
+            "name": "Ruoholahden ala-asteen 3B",
+            "member_count": 20
+        },
+        {
+            "name": "Best group",
+            "member_count": 5
+        },
+        {
+            "name": "Worst group",
+            "member_count": 1
+        },
+        {
+            "name": "Kaverit",
+            "member_count": 3
+        }
+    ]
+}
