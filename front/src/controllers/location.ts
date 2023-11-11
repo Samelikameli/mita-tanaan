@@ -21,9 +21,8 @@ const useAllUsersLocation = () => {
             const updatedUsers: User[] = [];
             snapshot.forEach((doc: QueryDocumentSnapshot<T>) => updatedUsers.push(doc.data() as User));
 
-            console.log(updatedUsers);
             setAllLocations(updatedUsers);
-            console.log(updatedUsers);
+            console.log("Updated users!");
         });
         return unsubscribe;
     }, [db]);

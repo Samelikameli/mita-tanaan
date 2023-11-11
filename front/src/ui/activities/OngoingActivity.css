@@ -1,0 +1,3 @@
+.mapboxgl-marker {
+    transition: transform linear 0.1s !important;
+}
