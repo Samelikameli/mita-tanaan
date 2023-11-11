@@ -3,25 +3,10 @@ import { useUserFetching } from "./controllers/user.tsx";
 import Register from "./ui/account/Register.tsx";
 import UserContext from "./usercontext.tsx";
 import ActivitiesView from "./ui/activities/ActivitiesView.tsx";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import SingleActivityView from "./ui/activities/SingleActivityView.tsx";
 import IntroView from "./ui/intro/IntroView.tsx";
-
-const router = createBrowserRouter([
-    {
-        path: "/",
-        element: <IntroView />,
-        // errorElement: <div>Not found</div>,
-    },
-    {
-        path: "/activities",
-        element: <ActivitiesView />,
-    },
-    {
-        path: "/activities/:id",
-        element: <SingleActivityView />,
-    },
-]);
+import { AnimatePresence } from "framer-motion";
 
 const App = () => {
     //TODO: rekisteröintintisivu jos !userExists
@@ -35,7 +20,15 @@ const App = () => {
 
     return (
         <UserContext.Provider value={user}>
-            <RouterProvider router={router} />
+            <BrowserRouter>
+                <AnimatePresence>
+                    <Routes>
+                        <Route path="/" element={<IntroView />} />
+                        <Route path="/activities" element={<ActivitiesView />} />
+                        <Route path="/activities/:id" element={<SingleActivityView />} />
+                    </Routes>
+                </AnimatePresence>
+            </BrowserRouter>
         </UserContext.Provider>
     );
 };
