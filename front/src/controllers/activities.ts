@@ -19,12 +19,13 @@ export type Activity = {
     customTime: string | null;
     owner: string;
     votes: Array<VoteCount>;
+    group: Array<string>;
 };
 
-type fetchActivitiesQueryKey = ["activities", string | undefined];
-
-const fetchActivities = async ({ queryKey }: { queryKey: fetchActivitiesQueryKey }): Promise<Activity[]> => {
-    console.log(queryKey);
+/**
+ * Fetch all activities currently in Firestore
+ */
+const fetchActivities = async (): Promise<Activity[]> => {
     const db = getFirestore(firebaseApp);
     const q = query(collection(db, "activities"));
     const activities: Activity[] = [];
@@ -48,7 +49,11 @@ const useActivities = () => {
     // return useQuery(queryKey, fetchActivities, { refetchInterval: 1000 });
 };
 
-const writeActivity = async (activity: Omit<Activity, "id">): Promise<string> => {
+/**
+ * Write a new activity to Firestore
+ * @returns The ID of the new activity
+ */
+const writeActivity = async (activity: Omit<Activity, "id" | "votes"> & { votes: string }): Promise<string> => {
     const db = getFirestore(firebaseApp);
     // Add a new document in collection "cities"
     const ref = doc(collection(db, "activities"));
@@ -67,7 +72,8 @@ const useCreateActivity = () => {
             place: activity.place,
             time: activity.time,
             customTime: activity.customTime || null,
-            votes: [],
+            votes: JSON.stringify([]),
+            group: [],
             owner: user?.name,
         });
         return id;
