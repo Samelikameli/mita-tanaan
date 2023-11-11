@@ -8,6 +8,7 @@ import panda from "../../assets/panda_face.png";
 import pig from "../../assets/pig_face.png";
 import tiger from "../../assets/tiger_face.png";
 import giraffe from "../../assets/giraffe.png";
+import pos from "../../assets/mypos.png";
 
 const faces = {
     dog,
@@ -21,6 +22,7 @@ const faces = {
     pig,
     tiger,
     giraffe,
+    pos,
 };
 
 import { Image } from "@chakra-ui/react";

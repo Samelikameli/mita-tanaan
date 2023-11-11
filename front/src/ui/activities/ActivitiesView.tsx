@@ -25,7 +25,7 @@ const listItem = {
 };
 
 const ActivitiesView = () => {
-    const { data: activities } = useActivities();
+    const { data: activities, vote } = useActivities();
     const { data: groups } = useGroups();
 
     return (
@@ -57,11 +57,14 @@ const ActivitiesView = () => {
                                                     paddingTop="2">
                                                     {g.name}
                                                 </Heading>
-                                                {activitiesInGroup.map(a => (
-                                                    <motion.div key={a.id} variants={listItem}>
-                                                        <Suggestion activity={a} />
-                                                    </motion.div>
-                                                ))}
+                                                {activitiesInGroup.map(a => {
+                                                    console.log("Activity", a);
+                                                    return (
+                                                        <motion.div key={a.id} variants={listItem}>
+                                                            <Suggestion activity={a} vote={vote} />
+                                                        </motion.div>
+                                                    );
+                                                })}
                                                 {activitiesInGroup.length === 0 && (
                                                     <Text fontSize="sm" textAlign="center" fontWeight="bold" color="#888888">
                                                         No suggestions yet.
@@ -87,7 +90,7 @@ const ActivitiesView = () => {
     );
 };
 
-const Suggestion = (props: { activity: Activity }) => {
+const Suggestion = (props: { activity: Activity; vote: (activityId: string, emoji: string) => Promise<void> }) => {
     const { id, name, owner, votes, time } = props.activity;
     const { emoji: timeEmoji } = timeModeToEmoji(time);
     return (
@@ -108,7 +111,7 @@ const Suggestion = (props: { activity: Activity }) => {
             </Link>
             <HStack spacing={1} marginTop="1rem" flexWrap="wrap">
                 {votes.map(v => (
-                    <EmojiCount votes={v} key={v.emoji} />
+                    <EmojiCount vote={v} key={v.emoji} onClick={() => props.vote(props.activity.id, v.emoji)} />
                 ))}
                 <Box flex="1"></Box>
                 <Link to={`/activities/${id}`}>
@@ -121,17 +124,17 @@ const Suggestion = (props: { activity: Activity }) => {
     );
 };
 
-const EmojiCount = (props: { votes: VoteCount }) => {
-    const [isAdded, setIsAdded] = useState(false);
+const EmojiCount = (props: { vote: object; onClick: () => void }) => {
+    const haveIVoted = props.vote.haveIVoted;
     return (
         <Button
             size="xs"
             variant="outline"
-            colorScheme={isAdded ? "blue" : undefined}
+            colorScheme={haveIVoted ? "blue" : undefined}
             paddingRight={3}
             borderRadius="full"
-            onClick={() => setIsAdded(b => !b)}>
-            {props.votes.emoji} {props.votes.count + (isAdded ? 1 : 0)}
+            onClick={props.onClick}>
+            {props.vote.emoji} {props.vote.count}
         </Button>
     );
 };

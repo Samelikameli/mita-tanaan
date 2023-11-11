@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
-import Map, { Marker } from "react-map-gl";
+import Map, { Marker, Layer, MapRef } from "react-map-gl";
 
 import * as mapboxgl from "mapbox-gl";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Box, Card, CardBody, GridItem, Grid, Flex, Text, CardHeader } from "@chakra-ui/react";
 
 import useAllUsersLocation from "../../controllers/location.ts";
@@ -12,8 +12,10 @@ import "./OngoingActivity.css";
 import { useActivities } from "../../controllers/activities.ts";
 import { timeModeToEmoji } from "../utils.tsx";
 import { useNavigate } from "react-router-dom";
+import UserContext from "../../usercontext.tsx";
 
 const OngoingActivityView = () => {
+    const user = useContext(UserContext);
     const { data: activities, isLoading } = useActivities();
 
     const [show, setShow] = useState(0);
@@ -29,6 +31,8 @@ const OngoingActivityView = () => {
             navigate("/silent");
         }
     }, [activity?.ongoing, navigate]);
+
+    const mapRef = useRef<MapRef>();
 
     if (isLoading) {
         return <p>Loading</p>;
@@ -69,6 +73,7 @@ const OngoingActivityView = () => {
                                     mapLib={mapboxgl}
                                     style={{ width: "100%", height: "100%" }}
                                     initialViewState={{ longitude: 25, latitude: 60, zoom: 3.5 }}
+                                    viewState={{ latitude: user?.location.latitude, longitude: user?.location.longitude }}
                                     mapboxAccessToken={"pk.eyJ1IjoidmVlZXRpIiwiYSI6ImNrMWdwandlODBkMHIzbmw4a241Y3hubWgifQ.4c85YNclymjgZ0Fw8pm4Ng"}
                                     mapStyle={"mapbox://styles/veeeti/clotyihro00s701nzcxkx8mho"}>
                                     {activity.location && (
@@ -79,6 +84,11 @@ const OngoingActivityView = () => {
                                             <Avatar key={user.id} animal={user.avatar} small={true} />
                                         </Marker>
                                     ))}
+                                    {user?.location && (
+                                        <Marker key={"me"} longitude={user.location.longitude} latitude={user.location.latitude}>
+                                            <Avatar animal={"pos"} small={true}></Avatar>
+                                        </Marker>
+                                    )}
                                 </Map>
                             </motion.div>
                         </Box>

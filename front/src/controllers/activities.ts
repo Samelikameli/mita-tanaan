@@ -1,4 +1,4 @@
-import { collection, doc, getFirestore, query, setDoc } from "@firebase/firestore";
+import { collection, doc, getFirestore, query, setDoc, updateDoc } from "@firebase/firestore";
 import { useContext, useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { firebaseApp } from "../main";
@@ -19,7 +19,7 @@ export type Activity = {
     time: string;
     customTime: string | null;
     owner: string;
-    votes: Array<VoteCount>;
+    votes: { emoji: string; count: number; haveIVoted: boolean }[];
     group: Array<string>;
     ongoing?: boolean;
 };
@@ -58,7 +58,27 @@ const useActivities = () => {
             const updatedActivities: Activity[] = [];
             snapshot.forEach((doc: QueryDocumentSnapshot<unknown>) => {
                 const data = doc.data();
-                return updatedActivities.push({ id: doc.id, ...data, votes: JSON.parse(data.votes) } as Activity);
+
+                console.log("Votes:", data.votes);
+
+                const votes = {};
+
+                Object.keys(data.votes).forEach(voterId => {
+                    const emoji = data.votes[voterId];
+                    if (!(emoji in votes)) votes[emoji] = { emoji, count: 0, haveIVoted: false };
+                    votes[emoji].count += 1;
+                    if (voterId === user.id) {
+                        votes[emoji].haveIVoted = true;
+                    }
+                });
+
+                console.log(votes);
+
+                return updatedActivities.push({
+                    id: doc.id,
+                    ...data,
+                    votes: Object.values(votes).sort((a, b) => a.emoji?.localeCompare(b.emoji)),
+                } as Activity);
             });
 
             console.log(updatedActivities);
@@ -66,9 +86,15 @@ const useActivities = () => {
             console.log("Updated activities!");
         });
         return unsubscribe;
-    }, [db]);
+    }, [db, user?.id]);
 
-    return { data: allActivities, isLoading: allActivities.length == 0 };
+    const vote = async (activityId: string, emoji: string) => {
+        const ref = doc(db, "activities", activityId);
+        await updateDoc(ref, `votes.${user?.id}`, emoji);
+        // await setDoc(ref, { votes:  }, { merge: true });
+    };
+
+    return { data: allActivities, isLoading: allActivities.length == 0, vote };
 
     // const queryKey: fetchActivitiesQueryKey = ["activities", user?.id];
     // return useQuery(queryKey, fetchActivities, { refetchInterval: 1000 });
