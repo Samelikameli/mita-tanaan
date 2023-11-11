@@ -7,6 +7,7 @@ import lion from "../../assets/lion_face.png";
 import panda from "../../assets/panda_face.png";
 import pig from "../../assets/pig_face.png";
 import tiger from "../../assets/tiger_face.png";
+import giraffe from "../../assets/giraffe.png";
 
 const faces = {
     dog,
@@ -19,6 +20,7 @@ const faces = {
     "panda,jpg": panda,
     pig,
     tiger,
+    giraffe,
 };
 
 import { Image } from "@chakra-ui/react";
@@ -33,7 +35,7 @@ const Avatar = ({ animal, small }: Props) => {
         <Image
             filter={`drop-shadow(0px 0px ${small ? 1 : 5}px gray)`}
             src={faces[animal] as string}
-            boxSize={small ? "24px" : "160px"}
+            boxSize={animal === "giraffe" ? "64px" : small ? "24px" : "160px"}
             objectFit={"cover"}></Image>
     );
 };
