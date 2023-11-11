@@ -7,7 +7,7 @@ const SingleActivityView = () => {
     return (
         <ViewFadeWrapper>
             <Box padding={4} background="orange.100" height="100%">
-                <Button colorScheme="gray" size="sm" onClick={() => navigate("/activities")}>
+                <Button colorScheme="gray" size="sm" onClick={() => navigate("/home/activities")}>
                     Back
                 </Button>
                 <Heading fontSize="xl" paddingTop="5">

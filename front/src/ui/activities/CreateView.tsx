@@ -44,7 +44,7 @@ const CreateView = () => {
                     <MyCard text={"What are we doing today?"} to="/activities/create" />
                 </SlideFade>
                 <SlideFade in={true} offsetX={100} offsetY={0} delay={PAGE_CHANGE_ANIM + 0.4}>
-                    <MyCard text={"Start a challenge"} to="/challenges" />
+                    <MyCard text={"Start a challenge"} to="/home/challenges" />
                 </SlideFade>
                 <span></span>
             </VStack>

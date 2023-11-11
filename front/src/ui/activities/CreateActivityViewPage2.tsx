@@ -28,16 +28,16 @@ const CreateActivityViewPage2 = () => {
     const onSubmit = (e: FormEvent) => {
         e.preventDefault();
         modifyActivityGroups(params.id!, selectedGroups).then(() => {
-            navigate(`/activities/${params.id}`);
+            navigate(`/home/activities`);
         });
     };
 
     //const groups = ["Class 2b", "Local skaters", "Football team", "Primary School"];
-    const friends = ["Artur", "Essi", "Tuomas", "Tina", "Kaappo", "Peter", "Veeti", "Samu", "Petteri", "James"];
+    const friends = ["Artur", "Essi", "Tuomas", "Tina", "Kaappo", "Peter", "Veeti", "Samu", "Petteri", "James", "Mitro", "Tomi"];
 
     return (
         <ViewFadeWrapper>
-            <Box padding={4} background="white" height="100%">
+            <Box padding={4} background="white" height="100%" overflowY="auto">
                 <form onSubmit={onSubmit}>
                     {/*<Button colorScheme="gray" size="sm" type="button">
                         Cancel

@@ -1,15 +1,30 @@
 import { BottomNavigation, BottomNavigationItem, BottomNavigationLabel } from "chakra-ui-bottom-navigation";
 
-import { Box, Heading, Text } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 
 import ActivitiesView from "../activities/ActivitiesView.tsx";
-import { useState } from "react";
 import CreateView from "../activities/CreateView.tsx";
-import ChallengesView from "../activities/ChallengesView.tsx";
+import ChallengesView from "../challenges/ChallengesView.tsx";
 import { AnimatePresence } from "framer-motion";
+import { useLocation, useNavigate } from "react-router-dom";
+
+const getTabIndex = (pathName: string) => {
+    if (pathName == "/home/activities") return 0;
+    if (pathName == "/home/create") return 1;
+    if (pathName == "/home/challenges") return 2;
+    return 1;
+};
 
 const HomeView = () => {
-    const [tabIndex, setTabIndex] = useState<number | string>(1);
+    const navigate = useNavigate();
+    const location = useLocation();
+    //const [tabIndex, setTabIndex] = useState<number | string>(1);
+
+    const changeTab = (newValue: string | number) => {
+        navigate(["/home/activities", "/home/create", "/home/challenges"][newValue as number]);
+    };
+
+    const tabIndex = getTabIndex(location.pathname);
 
     return (
         <Box style={{ height: "100%", display: "flex", flexDirection: "column" }}>
@@ -19,7 +34,7 @@ const HomeView = () => {
 
             <BottomNavigation
                 value={tabIndex}
-                onChange={setTabIndex}
+                onChange={changeTab}
                 colorScheme={"white"}
                 variant={"flat"}
                 showLabel={"always"}
@@ -27,13 +42,22 @@ const HomeView = () => {
                 style={{ position: "relative" }}
                 boxShadow="0 0 1rem rgba(0,0,0,0.2)">
                 <BottomNavigationItem>
-                    <BottomNavigationLabel fontSize={"24px"}>🚀</BottomNavigationLabel>
+                    <BottomNavigationLabel fontSize={"16px"}>
+                        <Text fontSize="24px">🚀</Text>
+                        Activities
+                    </BottomNavigationLabel>
                 </BottomNavigationItem>
                 <BottomNavigationItem>
-                    <BottomNavigationLabel fontSize={"24px"}>+</BottomNavigationLabel>
+                    <BottomNavigationLabel fontSize={"16px"}>
+                        <Text fontSize="24px">+</Text>
+                        Create
+                    </BottomNavigationLabel>
                 </BottomNavigationItem>
                 <BottomNavigationItem>
-                    <BottomNavigationLabel fontSize={"24px"}>🏆</BottomNavigationLabel>
+                    <BottomNavigationLabel fontSize="16px">
+                        <Text fontSize="24px">🏆</Text>
+                        Challenges
+                    </BottomNavigationLabel>
                 </BottomNavigationItem>
             </BottomNavigation>
         </Box>
