@@ -55,4 +55,8 @@ const useActivities = () => {
     return useQuery(queryKey, fetchActivities);
 };
 
-export { useActivities };
+const createActivity = (activity: { name: string; emoji: string; place: string; time: string | undefined }) => {
+    console.log(activity);
+};
+
+export { useActivities, createActivity };
