@@ -7,6 +7,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import SingleActivityView from "./ui/activities/SingleActivityView.tsx";
 import IntroView from "./ui/intro/IntroView.tsx";
 import { AnimatePresence } from "framer-motion";
+import OngoingActivityView from "./ui/activities/OngoingActivityView.tsx";
 
 const App = () => {
     //TODO: rekisteröintintisivu jos !userExists
@@ -26,6 +27,7 @@ const App = () => {
                         <Route path="/" element={<IntroView />} />
                         <Route path="/activities" element={<ActivitiesView />} />
                         <Route path="/activities/:id" element={<SingleActivityView />} />
+                        <Route path="/ongoing" element={<OngoingActivityView />} />
                     </Routes>
                 </AnimatePresence>
             </BrowserRouter>
