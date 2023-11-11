@@ -14,6 +14,7 @@ import ChallengesView from "./ui/challenges/ChallengesView.tsx";
 import SingleChallengeView from "./ui/challenges/SingleChallengeView.tsx";
 import RecordChallengeView from "./ui/challenges/RecordChallengeView.tsx";
 import HomeView from "./ui/home/HomeView.tsx";
+import CreateActivityViewPage2 from "./ui/activities/CreateActivityViewPage2.tsx";
 
 const App = () => {
     //TODO: rekisteröintintisivu jos !userExists
@@ -45,6 +46,7 @@ const AppRoutes = () => {
                 <Route path="/activities" element={<ActivitiesView />} />
                 <Route path="/activities/:id" element={<SingleActivityView />} />
                 <Route path="/activities/create" element={<CreateActivityView />} />
+                <Route path="/activities/create/:id" element={<CreateActivityViewPage2 />} />
                 <Route path="/ongoing" element={<OngoingActivityView />} />
                 <Route path="/challenges" element={<ChallengesView />} />
                 <Route path="/challenges/:id" element={<SingleChallengeView />} />

@@ -21,7 +21,9 @@ const CreateActivityView = () => {
     const createActivity = useCreateActivity();
 
     const onSubmit = handleSubmit((values: FormValues) =>
-        createActivity({ name: values.name, emoji, place: values.place, time, customTime: values.time }),
+        createActivity({ name: values.name, emoji, place: values.place, time, customTime: values.time }).then(activityId => {
+            navigate(`/activities/create/${activityId}`);
+        }),
     );
 
     const choose = (time: string) => () => {

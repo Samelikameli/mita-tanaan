@@ -79,9 +79,8 @@ const useCreateActivity = () => {
     const user = useContext(UserContext);
     if (!user) throw Error("User not defined in useCreateActivity");
 
-    return (activity: { name: string; emoji: string; place: string; time: string; customTime: string | undefined }) => {
-        console.log(activity);
-        writeActivity({
+    return async (activity: { name: string; emoji: string; place: string; time: string; customTime: string | undefined }): Promise<string> => {
+        const id = await writeActivity({
             name: activity.name,
             emoji: activity.emoji,
             place: activity.place,
@@ -90,6 +89,7 @@ const useCreateActivity = () => {
             votes: [],
             owner: user?.name,
         });
+        return id;
     };
 };
 

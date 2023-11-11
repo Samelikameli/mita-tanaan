@@ -1,15 +1,11 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { query, collection, getFirestore, onSnapshot, QuerySnapshot, DocumentData, QueryDocumentSnapshot } from "firebase/firestore";
-import AppContext from "../appcontext.tsx";
 
 import { User } from "./user.tsx";
 import { firebaseApp } from "../main.tsx";
 
 const useAllUsersLocation = () => {
-    //const user = useContext(UserContext);
-
-    //const app = useContext(AppContext);
     const db = getFirestore(firebaseApp);
 
     const [allLocations, setAllLocations] = useState<User[]>([]);
