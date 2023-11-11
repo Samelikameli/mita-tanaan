@@ -1,41 +1,71 @@
-import { VStack, Card, Box, HStack, Button, Heading, Text } from "@chakra-ui/react";
+import { VStack, Card, Box, HStack, Button, Heading, Text, SlideFade } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import EmojiIcon from "../EmojiIcon";
 import { Activity, useActivities } from "../../controllers/activities";
+import { AnimatePresence, motion } from "framer-motion";
+import ViewFadeWrapper from "../ViewFadeWrapper";
+
+const container = {
+    hidden: { opacity: 0 },
+    show: {
+        opacity: 1,
+        delay: 0.5,
+        transition: {
+            staggerChildren: 0.2,
+        },
+    },
+};
+
+const listItem = {
+    hidden: { opacity: 0 },
+    show: { opacity: 1 },
+};
 
 const ActivitiesView = () => {
     const { data: activities, isLoading } = useActivities();
 
     return (
-        <VStack background="orange.100" height="100%" alignItems="stretch" spacing="0">
-            <Box padding="4" flex="1" overflowY="auto">
-                <Heading fontSize="xl" paddingTop="5">
-                    What are we doing today?
-                </Heading>
-                <Text fontSize="m" paddingBottom="4">
-                    Here are your friends' suggestions
-                </Text>
-                {isLoading && <Text>Loading...</Text>}
-                {activities && (
-                    <VStack spacing={4} align="stretch">
-                        {activities.map(a => (
-                            <Suggestion activity={a} key={a.id} />
-                        ))}
-                    </VStack>
-                )}
-            </Box>
-            <Box background="white" padding="3" textAlign="center" boxShadow="0 0 1rem rgba(0,0,0,0.3)" z-index="100" position="relative">
-                <Button colorScheme="blue">Add new suggestion</Button>
-            </Box>
-        </VStack>
+        <ViewFadeWrapper>
+            <VStack background="orange.100" height="100%" alignItems="stretch" spacing="0">
+                <Box padding="4" flex="1" overflowY="auto">
+                    <SlideFade in={true} offsetX={100} offsetY={0}>
+                        <Heading fontSize="xl" paddingTop="5">
+                            What are we doing today?
+                        </Heading>
+                        <Text fontSize="m" paddingBottom="4">
+                            Here are your friends' suggestions
+                        </Text>
+                    </SlideFade>
+                    {/*isLoading && <Text>Loading...</Text>*/}
+                    {activities && (
+                        <motion.div variants={container} initial="hidden" animate="show">
+                            <VStack spacing={4} align="stretch">
+                                <AnimatePresence>
+                                    {activities.map(a => (
+                                        <motion.div key={a.id} variants={listItem}>
+                                            <Suggestion activity={a} />
+                                        </motion.div>
+                                    ))}
+                                </AnimatePresence>
+                            </VStack>
+                        </motion.div>
+                    )}
+                </Box>
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
+                    <Box background="white" padding="3" textAlign="center" boxShadow="0 0 1rem rgba(0,0,0,0.3)" z-index="100" position="relative">
+                        <Button colorScheme="blue">Add new suggestion</Button>
+                    </Box>
+                </motion.div>
+            </VStack>
+        </ViewFadeWrapper>
     );
 };
 
 const Suggestion = (props: { activity: Activity }) => {
     const { id, name, owner, votes } = props.activity;
     return (
-        <Link to={`/activities/${id}`}>
-            <Card padding={2}>
+        <Card padding={2}>
+            <Link to={`/activities/${id}`}>
                 <HStack>
                     <EmojiIcon>⚽</EmojiIcon>
                     <VStack flex="1" alignItems="right" justifyContent="center" spacing={0}>
@@ -48,19 +78,21 @@ const Suggestion = (props: { activity: Activity }) => {
                         34 min ago
                     </Text>
                 </HStack>
-                <HStack spacing={1} marginTop="1rem" flexWrap="wrap">
-                    {votes.map(({ emoji, count }) => (
-                        <Button size="xs" variant="outline" key={emoji} paddingRight={3} borderRadius="full">
-                            {emoji} {count}
-                        </Button>
-                    ))}
-                    <Box flex="1"></Box>
+            </Link>
+            <HStack spacing={1} marginTop="1rem" flexWrap="wrap">
+                {votes.map(({ emoji, count }) => (
+                    <Button size="xs" variant="outline" key={emoji} paddingRight={3} borderRadius="full" onClick={() => {}}>
+                        {emoji} {count}
+                    </Button>
+                ))}
+                <Box flex="1"></Box>
+                <Link to={`/activities/${id}`}>
                     <Button size="xs" colorScheme="blue">
                         Open
                     </Button>
-                </HStack>
-            </Card>
-        </Link>
+                </Link>
+            </HStack>
+        </Card>
     );
 };
 

@@ -17,3 +17,4 @@ npm install
 npm run dev
 ```
 
+List of available icons: https://react-icons.github.io/react-icons/icons?name=fi
