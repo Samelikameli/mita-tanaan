@@ -34,8 +34,8 @@ const ActivitiesView = () => {
 const Suggestion = (props: { activity: Activity }) => {
     const { id, name, owner, votes } = props.activity;
     return (
-        <Link to={`/activities/${id}`}>
-            <Card padding={2}>
+        <Card padding={2}>
+            <Link to={`/activities/${id}`}>
                 <HStack>
                     <EmojiIcon>⚽</EmojiIcon>
                     <VStack flex="1" alignItems="right" justifyContent="center" spacing={0}>
@@ -48,19 +48,19 @@ const Suggestion = (props: { activity: Activity }) => {
                         34 min ago
                     </Text>
                 </HStack>
-                <HStack spacing={1} marginTop="1rem" flexWrap="wrap">
-                    {votes.map(({ emoji, count }) => (
-                        <Button size="xs" variant="outline" key={emoji} paddingRight={3} borderRadius="full">
-                            {emoji} {count}
-                        </Button>
-                    ))}
-                    <Box flex="1"></Box>
-                    <Button size="xs" colorScheme="blue">
-                        Open
+            </Link>
+            <HStack spacing={1} marginTop="1rem" flexWrap="wrap">
+                {votes.map(({ emoji, count }) => (
+                    <Button size="xs" variant="outline" key={emoji} paddingRight={3} borderRadius="full" onClick={() => {}}>
+                        {emoji} {count}
                     </Button>
-                </HStack>
-            </Card>
-        </Link>
+                ))}
+                <Box flex="1"></Box>
+                <Button size="xs" colorScheme="blue">
+                    Open
+                </Button>
+            </HStack>
+        </Card>
     );
 };
 
