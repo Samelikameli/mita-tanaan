@@ -1,4 +1,4 @@
-const timeModeToEmoji = (timeMode: string) => {
+const timeModeToEmoji = (timeMode: string | null) => {
     if (timeMode == "after-school") return { emoji: "🏫", name: "After school" };
     if (timeMode == "after-dinner") return { emoji: "🍽️", name: "After dinner" };
     if (timeMode == "custom") return { emoji: "🕒", name: "Custom time" };

@@ -49,7 +49,7 @@ const useActivities = () => {
 
     const db = getFirestore(firebaseApp);
 
-    const [allActivities, setAllActivities] = useState<User[]>([]);
+    const [allActivities, setAllActivities] = useState<Activity[]>([]);
 
     useEffect(() => {
         const q = query(collection(db, "activities"));
@@ -64,7 +64,7 @@ const useActivities = () => {
         return unsubscribe;
     }, [db]);
 
-    return { data: allActivities, isLoading: false };
+    return { data: allActivities, isLoading: allActivities.length == 0 };
 
     // const queryKey: fetchActivitiesQueryKey = ["activities", user?.id];
     // return useQuery(queryKey, fetchActivities, { refetchInterval: 1000 });

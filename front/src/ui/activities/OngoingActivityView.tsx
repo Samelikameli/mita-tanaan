@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import Map, { Marker } from "react-map-gl";
 
 import * as mapboxgl from "mapbox-gl";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, Card, CardBody, GridItem, Grid, Flex, Text, CardHeader } from "@chakra-ui/react";
 
 import useAllUsersLocation from "../../controllers/location.ts";
@@ -11,21 +11,29 @@ import Avatar from "../account/Avatar.tsx";
 import "./OngoingActivity.css";
 import { useActivities } from "../../controllers/activities.ts";
 import { timeModeToEmoji } from "../utils.tsx";
+import { useNavigate } from "react-router-dom";
 
 const OngoingActivityView = () => {
     const { data: activities, isLoading } = useActivities();
 
     const [show, setShow] = useState(0);
     const locations = useAllUsersLocation();
+    const navigate = useNavigate();
 
-    if (isLoading || activities?.length == 0) {
+    const activity = isLoading ? null : activities[0];
+    // console.log(activity);
+    let timeModeToEmoji1 = timeModeToEmoji(activity?.time);
+
+    useEffect(() => {
+        if (activity?.ongoing) {
+            navigate("/silent");
+        }
+    }, [activity?.ongoing]);
+
+    if (isLoading) {
         return <p>Loading</p>;
     }
-    const activity = activities[0];
-    console.log(activity);
-    let timeModeToEmoji1 = timeModeToEmoji(activity.time);
 
-    console.log(activity.ongoing);
     return (
         <Flex direction={"column"} style={{ height: "100%" }} gap={10}>
             <GridItem flex={"1"} mt={10} mx={4}>
