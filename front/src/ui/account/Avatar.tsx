@@ -35,7 +35,7 @@ const Avatar = ({ animal, small }: Props) => {
         <Image
             filter={`drop-shadow(0px 0px ${small ? 1 : 5}px gray)`}
             src={faces[animal] as string}
-            boxSize={animal === "giraffe" ? "64px" : small ? "72px" : "160px"}
+            boxSize={animal === "giraffe" ? "64px" : small ? "48px" : "160px"}
             objectFit={"cover"}></Image>
     );
 };

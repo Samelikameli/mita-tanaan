@@ -43,8 +43,9 @@ const fetchActivities = async ({ queryKey }: { queryKey: fetchActivitiesQueryKey
 
 const useActivities = () => {
     const user = useContext(UserContext);
-    const queryKey: fetchActivitiesQueryKey = ["activities", user?.id];
-    return useQuery(queryKey, fetchActivities);
+
+    // const queryKey: fetchActivitiesQueryKey = ["activities", user?.id];
+    // return useQuery(queryKey, fetchActivities, { refetchInterval: 1000 });
 };
 
 const writeActivity = async (activity: Omit<Activity, "id">): Promise<string> => {
