@@ -16,119 +16,143 @@ const { initializeApp } = require("firebase-admin/app");
 const admin = require('firebase-admin');
 
 
+
 const homes = [
     {
         name: "Lauttasaari",
+        avatar: "dog",
         latitude: 60.157236,
         longitude: 24.862941
     },
     {
         name: "Kamppi",
+        avatar: "bear",
         latitude: 60.1699,
         longitude: 24.9326
     },
     {
         name: "Kallio",
+        avatar: "cat",
         latitude: 60.1820,
         longitude: 24.9493
     },
     {
         name: "Töölö",
+        avatar: "fox",
         latitude: 60.1920,
         longitude: 24.9161
     },
     {
         name: "Sörnäinen",
+        avatar: "koala",
         latitude: 60.1872,
         longitude: 24.9617
     },
     {
         name: "Pasila",
+        avatar: "lion",
         latitude: 60.1988,
         longitude: 24.9322
     },
     {
         name: "Käpylä",
+        avatar: "panda",
         latitude: 60.2100,
         longitude: 24.9562
     },
     {
         name: "Malmi",
+        avatar: "pig",
         latitude: 60.2512,
         longitude: 25.0056
     },
     {
         name: "Herttoniemi",
+        avatar: "tiger",
         latitude: 60.1943,
         longitude: 25.0296
     },
     {
         name: "Kontula",
+        avatar: "dog",
         latitude: 60.2374,
         longitude: 25.0830
     },
     {
         name: "Itäkeskus",
+        avatar: "bear",
         latitude: 60.2093,
         longitude: 25.0830
     },
     {
         name: "Mellunmäki",
+        avatar: "cat",
         latitude: 60.2299,
         longitude: 25.1131
     },
     {
         name: "Vuosaari",
+        avatar: "fox",
         latitude: 60.2117,
         longitude: 25.1673
     },
     {
         name: "Kannelmäki",
+        avatar: "koala",
         latitude: 60.2395,
         longitude: 24.8743
     },
     {
         name: "Pitäjänmäki",
+        avatar: "lion",
         latitude: 60.2200,
         longitude: 24.8750
     },
     {
         name: "Malminkartano",
+        avatar: "panda",
         latitude: 60.2512,
         longitude: 24.8799
     },
     {
         name: "Pohjois-Haaga",
+        avatar: "pig",
         latitude: 60.2299,
         longitude: 24.8947
     },
     {
         name: "Huopalahti",
+        avatar: "tiger",
         latitude: 60.2221,
         longitude: 24.9051
     },
     {
         name: "Paloheinä",
+        avatar: "dog",
         latitude: 60.2448,
         longitude: 24.9099
     },
     {
         name: "Oulunkylä",
+        avatar: "bear",
         latitude: 60.2299,
         longitude: 24.9628
     },
     {
         name: "Pukinmäki",
+        avatar: "cat",
         latitude: 60.2399,
         longitude: 24.9799
     },
     {
         name: "Tapanila",
+        avatar: "fox",
         latitude: 60.2599,
         longitude: 24.9799
     },
     {
         name: "Puistola",
+        avatar: "koala",
         latitude: 60.2599,
         longitude: 25.0299
     }
@@ -152,7 +176,7 @@ async function createUsers() {
         const user = {
             name: home.name,
             location: new admin.firestore.GeoPoint(home.latitude, home.longitude),
-            avatar: "panda.jpg"
+            avatar: home.avatar
         }
         await admin.firestore().collection('users').add(user);
     }
@@ -177,7 +201,9 @@ function deg2rad(deg) {
     return deg * (Math.PI / 180)
 }
 
-
+function randomBetween(min, max) {
+    return Math.random() * (max - min) + min;
+  }
 
 exports.onUserWrite = onDocumentWritten({ document: "users/{userId}", location: "europe-north1" }, async (event) => {
     return;
@@ -280,12 +306,12 @@ exports.moveUsers = onRequest({ location: "europe-north1" }, async (request, res
             const dLon = (user.initialLocation.longitude - longitude)/steps;
 
             const data = {
-                location: new admin.firestore.GeoPoint(user.initialLocation.latitude - dLat * i, user.initialLocation.longitude - dLon * i)
+                location: new admin.firestore.GeoPoint(user.initialLocation.latitude - dLat * i + randomBetween(-0.1, 0.1) * dLat, user.initialLocation.longitude - dLon * i + randomBetween(-0.1, 0.1) * dLon)
             }
             await user.data.ref.update(data);
         }
         // Wait 1 second
-        await new Promise(resolve => setTimeout(resolve, 200));
+        //await new Promise(resolve => setTimeout(resolve, 200));
     }
 
     response.status(200).send(longitude + " " + latitude);
