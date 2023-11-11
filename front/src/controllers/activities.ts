@@ -1,11 +1,9 @@
 import { collection, doc, getFirestore, query, setDoc } from "@firebase/firestore";
 import { useContext } from "react";
 import { useQuery } from "react-query";
-import AppContext from "../appcontext";
 import { firebaseApp } from "../main";
 import UserContext from "../usercontext";
 import { getDocs } from "firebase/firestore";
-import { act } from "react-dom/test-utils";
 
 export type VoteCount = {
     emoji: string;
@@ -29,9 +27,36 @@ const mockVotes = [
 ];
 
 const mockActivities: Activity[] = [
-    { id: "0", emoji: "", name: "Futis", owner: "Artur Skwarek", place: "Koulun piha", time: "after-school", customTime: null, votes: mockVotes },
-    { id: "1", emoji: "", name: "Hengailu", owner: "Artur Skwarek", place: "", time: "after-school", customTime: null, votes: mockVotes },
-    { id: "2", emoji: "", name: "Hengailu", owner: "Artur Skwarek", place: "", time: "after-school", customTime: null, votes: mockVotes },
+    {
+        id: "0",
+        emoji: "⚽",
+        name: "Football after school?",
+        owner: "Artur Skwarek",
+        place: "Koulun piha",
+        time: "after-school",
+        customTime: null,
+        votes: mockVotes,
+    },
+    {
+        id: "1",
+        emoji: "",
+        name: "Ice hockey practice together",
+        owner: "Artur Skwarek",
+        place: "Rink at school",
+        time: "after-school",
+        customTime: null,
+        votes: mockVotes,
+    },
+    {
+        id: "2",
+        emoji: "🛹",
+        name: "Skateboarding at the mall",
+        owner: "Veeti Roponen",
+        place: "Shop Shop Mall",
+        time: "custom",
+        customTime: "16:00",
+        votes: mockVotes,
+    },
     { id: "3", emoji: "", name: "Hengailu", owner: "Artur Skwarek", place: "", time: "after-school", customTime: null, votes: mockVotes },
     { id: "4", emoji: "", name: "Hengailu", owner: "Artur Skwarek", place: "", time: "after-school", customTime: null, votes: mockVotes },
 ];
@@ -42,24 +67,20 @@ const fetchActivities = async ({ queryKey }: { queryKey: fetchActivitiesQueryKey
     console.log(queryKey);
     const db = getFirestore(firebaseApp);
     const q = query(collection(db, "activities"));
-    const activities = [];
+    const activities: Activity[] = [];
     const snapshot = await getDocs(q);
     snapshot.forEach(x => {
-        const paska = x.data();
+        const paska = {
+            id: x.id,
+            ...x.data(),
+        } as Activity;
         console.log(paska);
         activities.push(paska);
     });
-
     console.log(activities);
-    console.log(q);
-
-    await sleep(200);
+    //return activities;
     return mockActivities;
 };
-
-function sleep(ms: number) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
 
 const useActivities = () => {
     const user = useContext(UserContext);
