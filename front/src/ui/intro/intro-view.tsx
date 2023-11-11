@@ -1,9 +1,10 @@
 import { Button, VStack } from "@chakra-ui/react";
-import { useUser } from "../../usercontext";
+import UserContext from "../../usercontext";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
 
 const IntroView = () => {
-    const user = useUser();
+    const user = useContext(UserContext);
     const navigate = useNavigate();
 
     return (
