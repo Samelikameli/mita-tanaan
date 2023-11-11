@@ -1,27 +1,53 @@
-import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react";
-import EmojiPicker from "emoji-picker-react";
+import { Text, Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, useDisclosure, HStack } from "@chakra-ui/react";
 
-const ModalEmojiPicker = () => {
+type ModalEmojiPickerProps = {
+    emoji: string;
+    onChoose: (emoji: string) => void;
+};
+
+const ModalEmojiPicker = (props: ModalEmojiPickerProps) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const emojis =
+        "⚽️🏀🏈⚾️🥎🎾🏐🏉🥏🎱🪀🏓🏸🏒🏑🥍🏏🪃🥅⛳️🪁🏹🎣🤿🥊🥋🎽🛹🛼🛷⛸🥌🎿⛷🏂🪂🏋️‍♀️🏋️🏋️‍♂️🤼‍♀️🤼🤼‍♂️🤸‍♀️🤸🤸‍♂️⛹️‍♀️⛹️⛹️‍♂️🤺🤾‍♀️🤾🤾‍♂️🏌️‍♀️🏌️🏌️‍♂️🏇🧘‍♀️🧘🧘‍♂️🏄‍♀️🏄🏄‍♂️🏊‍♀️🏊🏊‍♂️🤽‍♀️🤽🤽‍♂️🚣‍♀️🚣🚣‍♂️🧗‍♀️🧗🧗‍♂️🚵‍♀️🚵🚵‍♂️🚴‍♀️🚴🚴‍♂️🏆🥇🥈🥉🏅🎖🏵🎗🎫🎟🎪🤹🤹‍♂️🤹‍♀️🎭🩰🎨🎬🎤🎧🎼🎹🥁🪘🪇🎷🎺🪗🎸🪕🎻🪈🎲♟🎯🎳🎮🎰🧩";
+
     return (
         <>
-            <Button onClick={onOpen}>Open Modal</Button>
+            <Button onClick={onOpen} size="lg">
+                <Text fontSize="2rem">{props.emoji}</Text>
+            </Button>
 
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
                 <ModalContent>
-                    <ModalHeader>Modal Title</ModalHeader>
+                    <ModalHeader>Choose an icon</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>
-                        <EmojiPicker width="90%" />
+                        <HStack flexWrap="wrap">
+                            {[...emojis].map((emoji, index) => (
+                                <Button
+                                    onClick={() => {
+                                        props.onChoose(emoji);
+                                        onClose();
+                                    }}
+                                    key={`${emoji}-${index}`}
+                                    fontSize="2rem"
+                                    size="lg">
+                                    {emoji}
+                                </Button>
+                            ))}
+                        </HStack>
+                        {/*<EmojiPicker
+                            width="100%"
+                            onEmojiClick={emoji => {
+                                onClose();
+                                props.onChoose(emoji.emoji);
+                            }}
+                            searchDisabled={true}
+                            lazyLoadEmojis={true}
+                            previewConfig={{ showPreview: false }}
+                            categories={[]}
+                        />*/}
                     </ModalBody>
-
-                    <ModalFooter>
-                        <Button colorScheme="blue" mr={3} onClick={onClose}>
-                            Close
-                        </Button>
-                        <Button variant="ghost">Secondary Action</Button>
-                    </ModalFooter>
                 </ModalContent>
             </Modal>
         </>
