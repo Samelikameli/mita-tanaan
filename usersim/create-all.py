@@ -102,9 +102,13 @@ with open("activities.json", "r") as f:
 
 for activity in activities:
     group = random.sample(group_ids, 1)
-    user_ids = db.collection("users").where("groups", "array_contains", group[0]).get()
+    user_group_ids = db.collection("users").where("groups", "array_contains", group[0]).get()
 
-    userId = random.sample(user_ids, 1)[0].id
+    userId = random.sample(user_group_ids, 1)[0].id
+    votes = {}
+    print(user_ids)
+    for i in random.sample(user_ids, 8):
+        votes[i] = random.choice(["👍", "🔥", "😂"])
 
     a = {
         "userId": userId,
@@ -117,7 +121,7 @@ for activity in activities:
         "emoji": activity["emoji"] if "emoji" in activity else None,
         "place": activity["place"] if "place" in activity else None,
         "time": activity["time"] if "time" in activity else None,
-        "votes": json.dumps(activity["votes"]) if "votes" in activity else None,
+        "votes": votes,
         "customTime": activity["customTime"] if "customTime" in activity else None,
         "name": activity["name"] if "name" in activity else None,
         "ongoing": False
