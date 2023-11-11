@@ -1,0 +1,1 @@
+curl https://europe-north1-mita-tanaan.cloudfunctions.net/resetPositions

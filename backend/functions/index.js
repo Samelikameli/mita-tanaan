@@ -247,6 +247,21 @@ exports.createUsers = onRequest({ location: "europe-north1" }, async (request, r
     response.status(200).send("OK");
 });
 
+exports.resetPositions = onRequest({ location: "europe-north1" }, async (request, response) => {
+    const users = await admin.firestore().collection('users').get();
+    for (const user of users.docs) {
+        for(home of homes){
+            if(user.data().name === home.name){
+                const data = {
+                    location: new admin.firestore.GeoPoint(home.latitude, home.longitude)
+                }
+                await user.ref.update(data);
+            }
+        }
+    }
+    response.status(200).send("OK");
+});
+
 exports.moveUsers = onRequest({ location: "europe-north1" }, async (request, response) => {
     const longitude = Number(request.query.longitude);
     const latitude = Number(request.query.latitude);
