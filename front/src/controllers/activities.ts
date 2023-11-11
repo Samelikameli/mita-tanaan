@@ -1,4 +1,4 @@
-import { collection, getFirestore, query } from "@firebase/firestore";
+import { collection, doc, getFirestore, query, setDoc } from "@firebase/firestore";
 import { useContext } from "react";
 import { useQuery } from "react-query";
 import AppContext from "../appcontext";
@@ -13,6 +13,10 @@ export type VoteCount = {
 export type Activity = {
     id: string;
     name: string;
+    emoji: string;
+    place: string;
+    time: string;
+    customTime: string | null;
     owner: string;
     votes: Array<VoteCount>;
 };
@@ -23,13 +27,11 @@ const mockVotes = [
 ];
 
 const mockActivities: Activity[] = [
-    { id: "0", name: "Futis", owner: "Artur Skwarek", votes: mockVotes },
-    { id: "1", name: "Hengailu", owner: "Artur Skwarek", votes: mockVotes },
-    { id: "2", name: "Hengailu", owner: "Artur Skwarek", votes: mockVotes },
-    { id: "3", name: "Hengailu", owner: "Artur Skwarek", votes: mockVotes },
-    { id: "4", name: "Hengailu", owner: "Artur Skwarek", votes: mockVotes },
-    { id: "5", name: "Hengailu", owner: "Artur Skwarek", votes: mockVotes },
-    { id: "6", name: "Hengailu", owner: "Artur Skwarek", votes: mockVotes },
+    { id: "0", emoji: "", name: "Futis", owner: "Artur Skwarek", place: "Koulun piha", time: "after-school", customTime: null, votes: mockVotes },
+    { id: "1", emoji: "", name: "Hengailu", owner: "Artur Skwarek", place: "", time: "after-school", customTime: null, votes: mockVotes },
+    { id: "2", emoji: "", name: "Hengailu", owner: "Artur Skwarek", place: "", time: "after-school", customTime: null, votes: mockVotes },
+    { id: "3", emoji: "", name: "Hengailu", owner: "Artur Skwarek", place: "", time: "after-school", customTime: null, votes: mockVotes },
+    { id: "4", emoji: "", name: "Hengailu", owner: "Artur Skwarek", place: "", time: "after-school", customTime: null, votes: mockVotes },
 ];
 
 type fetchActivitiesQueryKey = ["activities", string | undefined];
@@ -55,8 +57,30 @@ const useActivities = () => {
     return useQuery(queryKey, fetchActivities);
 };
 
-const createActivity = (activity: { name: string; emoji: string; place: string; time: string | undefined }) => {
-    console.log(activity);
+const writeActivity = async (activity: Omit<Activity, "id">): Promise<string> => {
+    const db = getFirestore(firebaseApp);
+    // Add a new document in collection "cities"
+    const ref = doc(collection(db, "activities"));
+    await setDoc(ref, activity);
+    return ref.id;
 };
 
-export { useActivities, createActivity };
+const useCreateActivity = () => {
+    const user = useContext(UserContext);
+    if (!user) throw Error("User not defined in useCreateActivity");
+
+    return (activity: { name: string; emoji: string; place: string; time: string; customTime: string | undefined }) => {
+        console.log(activity);
+        writeActivity({
+            name: activity.name,
+            emoji: activity.emoji,
+            place: activity.place,
+            time: activity.time,
+            customTime: activity.customTime || null,
+            votes: [],
+            owner: user?.name,
+        });
+    };
+};
+
+export { useActivities, useCreateActivity };

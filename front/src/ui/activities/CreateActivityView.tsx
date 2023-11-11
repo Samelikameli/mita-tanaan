@@ -4,7 +4,7 @@ import ViewFadeWrapper from "../ViewFadeWrapper";
 import ModalEmojiPicker from "../ModalEmojiPicker";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { createActivity } from "../../controllers/activities";
+import { useCreateActivity } from "../../controllers/activities";
 
 type FormValues = {
     name: string;
@@ -15,11 +15,14 @@ type FormValues = {
 const CreateActivityView = () => {
     const navigate = useNavigate();
     const [emoji, setEmoji] = useState("❓");
-    const [time, setTime] = useState<string | null>(null);
+    const [time, setTime] = useState<string>("after-school");
 
     const { register: registerInput, handleSubmit } = useForm<FormValues>();
+    const createActivity = useCreateActivity();
 
-    const onSubmit = handleSubmit((values: FormValues) => createActivity({ name: values.name, emoji, place: values.place, time: values.time }));
+    const onSubmit = handleSubmit((values: FormValues) =>
+        createActivity({ name: values.name, emoji, place: values.place, time, customTime: values.time }),
+    );
 
     const choose = (time: string) => () => {
         setTime(time);
