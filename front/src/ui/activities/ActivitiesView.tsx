@@ -6,7 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import ViewFadeWrapper, { PAGE_CHANGE_ANIM } from "../ViewFadeWrapper";
 import { timeModeToEmoji } from "../utils";
 import { useGroups } from "../../controllers/groups";
-import { useState } from "react";
+import React, { useState } from "react";
 
 const container = {
     hidden: { opacity: 0 },
@@ -48,7 +48,7 @@ const ActivitiesView = () => {
                                     {groups.map(g => {
                                         const activitiesInGroup = activities.filter(a => a.group.includes(g.id));
                                         return (
-                                            <>
+                                            <React.Fragment key={g.id}>
                                                 <Heading
                                                     fontSize="sm"
                                                     borderBottom="1px solid #D3D3D3"
@@ -69,7 +69,7 @@ const ActivitiesView = () => {
                                                         What would you like to do?
                                                     </Text>
                                                 )}
-                                            </>
+                                            </React.Fragment>
                                         );
                                     })}
                                 </AnimatePresence>
@@ -108,7 +108,7 @@ const Suggestion = (props: { activity: Activity }) => {
             </Link>
             <HStack spacing={1} marginTop="1rem" flexWrap="wrap">
                 {votes.map(v => (
-                    <EmojiCount votes={v} />
+                    <EmojiCount votes={v} key={v.emoji} />
                 ))}
                 <Box flex="1"></Box>
                 <Link to={`/activities/${id}`}>
