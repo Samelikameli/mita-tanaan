@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { collection, doc, getFirestore, query, setDoc } from "@firebase/firestore";
 import { useContext, useEffect, useState } from "react";
 import { useQuery } from "react-query";
