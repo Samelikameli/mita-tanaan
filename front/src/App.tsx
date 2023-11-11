@@ -8,6 +8,7 @@ import SingleActivityView from "./ui/activities/SingleActivityView.tsx";
 import IntroView from "./ui/intro/IntroView.tsx";
 import { AnimatePresence } from "framer-motion";
 import OngoingActivityView from "./ui/activities/OngoingActivityView.tsx";
+import { Box } from "@chakra-ui/react";
 
 const App = () => {
     //TODO: rekisteröintintisivu jos !userExists
@@ -15,7 +16,7 @@ const App = () => {
 
     console.log("in app: ", user, userExists);
 
-    if (loading) return <div>Loading</div>;
+    if (loading) return <Box background="background.100" height="100%"></Box>;
 
     if (!userExists) return <Register register={register} />;
 

@@ -1,0 +1,1 @@
+curl https://europe-north1-mita-tanaan.cloudfunctions.net/moveUsers\?latitude\=$1\&longitude\=$2\&steps\=$3
