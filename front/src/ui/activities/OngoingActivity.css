@@ -1,3 +1,7 @@
 .mapboxgl-marker {
     transition: transform linear 0.1s !important;
 }
+
+.mapboxgl-ctrl {
+    display: none !important;
+}
