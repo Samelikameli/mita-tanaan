@@ -4,6 +4,7 @@ import EmojiIcon from "../EmojiIcon";
 import { Activity, useActivities } from "../../controllers/activities";
 import { AnimatePresence, motion } from "framer-motion";
 import ViewFadeWrapper, { PAGE_CHANGE_ANIM } from "../ViewFadeWrapper";
+import { timeModeToEmoji } from "../utils";
 
 const container = {
     hidden: { opacity: 0 },
@@ -62,7 +63,8 @@ const ActivitiesView = () => {
 };
 
 const Suggestion = (props: { activity: Activity }) => {
-    const { id, name, owner, votes } = props.activity;
+    const { id, name, owner, votes, time } = props.activity;
+    const { emoji: timeEmoji } = timeModeToEmoji(time);
     return (
         <Card padding={2}>
             <Link to={`/activities/${id}`}>
@@ -70,12 +72,12 @@ const Suggestion = (props: { activity: Activity }) => {
                     <EmojiIcon>⚽</EmojiIcon>
                     <VStack flex="1" alignItems="right" justifyContent="center" spacing={0}>
                         <Text fontSize="1rem">{name}</Text>
-                        <Text fontSize="0.6rem" color="#555555">
+                        <Text fontSize="0.7rem" color="#555555">
                             {owner}
                         </Text>
                     </VStack>
-                    <Text fontSize="0.6rem" color="#555555" alignSelf="start" padding={1}>
-                        34 min ago
+                    <Text fontSize="0.8rem" color="#555555" alignSelf="start" padding={1}>
+                        {timeEmoji}
                     </Text>
                 </HStack>
             </Link>
