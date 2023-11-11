@@ -1,9 +1,10 @@
 import { collection, doc, getFirestore, query, setDoc } from "@firebase/firestore";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { firebaseApp } from "../main";
 import UserContext from "../usercontext";
-import { getDocs } from "firebase/firestore";
+import { DocumentData, getDocs, onSnapshot, QueryDocumentSnapshot, QuerySnapshot } from "firebase/firestore";
+import { User } from "./user.tsx";
 
 export type VoteCount = {
     emoji: string;
@@ -19,76 +20,61 @@ export type Activity = {
     customTime: string | null;
     owner: string;
     votes: Array<VoteCount>;
+    group: Array<string>;
+    ongoing?: boolean;
 };
 
-const mockVotes = [
-    { emoji: "🔥", count: 12 },
-    { emoji: "👍", count: 5 },
-];
-
-const mockActivities: Activity[] = [
-    {
-        id: "0",
-        emoji: "⚽",
-        name: "Football after school?",
-        owner: "Artur Skwarek",
-        place: "Koulun piha",
-        time: "after-school",
-        customTime: null,
-        votes: mockVotes,
-    },
-    {
-        id: "1",
-        emoji: "",
-        name: "Ice hockey practice together",
-        owner: "Artur Skwarek",
-        place: "Rink at school",
-        time: "after-school",
-        customTime: null,
-        votes: mockVotes,
-    },
-    {
-        id: "2",
-        emoji: "🛹",
-        name: "Skateboarding at the mall",
-        owner: "Veeti Roponen",
-        place: "Shop Shop Mall",
-        time: "custom",
-        customTime: "16:00",
-        votes: mockVotes,
-    },
-    { id: "3", emoji: "", name: "Hengailu", owner: "Artur Skwarek", place: "", time: "after-school", customTime: null, votes: mockVotes },
-    { id: "4", emoji: "", name: "Hengailu", owner: "Artur Skwarek", place: "", time: "after-school", customTime: null, votes: mockVotes },
-];
-
-type fetchActivitiesQueryKey = ["activities", string | undefined];
-
-const fetchActivities = async ({ queryKey }: { queryKey: fetchActivitiesQueryKey }): Promise<Activity[]> => {
-    console.log(queryKey);
+/**
+ * Fetch all activities currently in Firestore
+ */
+const fetchActivities = async (): Promise<Activity[]> => {
     const db = getFirestore(firebaseApp);
     const q = query(collection(db, "activities"));
     const activities: Activity[] = [];
     const snapshot = await getDocs(q);
     snapshot.forEach(x => {
-        const paska = {
-            id: x.id,
+        const a = {
             ...x.data(),
+            id: x.id,
+            votes: JSON.parse(x.data().votes),
         } as Activity;
-        console.log(paska);
-        activities.push(paska);
+        activities.push(a);
     });
     console.log(activities);
-    //return activities;
-    return mockActivities;
+    return activities;
 };
 
 const useActivities = () => {
     const user = useContext(UserContext);
-    const queryKey: fetchActivitiesQueryKey = ["activities", user?.id];
-    return useQuery(queryKey, fetchActivities);
+
+    const db = getFirestore(firebaseApp);
+
+    const [allActivities, setAllActivities] = useState<User[]>([]);
+
+    useEffect(() => {
+        const q = query(collection(db, "activities"));
+
+        const unsubscribe = onSnapshot(q, (snapshot: QuerySnapshot<DocumentData>) => {
+            const updatedActivities: Activity[] = [];
+            snapshot.forEach((doc: QueryDocumentSnapshot<unknown>) => updatedActivities.push(doc.data() as Activity));
+
+            setAllActivities(updatedActivities);
+            console.log("Updated activities!");
+        });
+        return unsubscribe;
+    }, [db]);
+
+    return { data: allActivities, isLoading: false };
+
+    // const queryKey: fetchActivitiesQueryKey = ["activities", user?.id];
+    // return useQuery(queryKey, fetchActivities, { refetchInterval: 1000 });
 };
 
-const writeActivity = async (activity: Omit<Activity, "id">): Promise<string> => {
+/**
+ * Write a new activity to Firestore
+ * @returns The ID of the new activity
+ */
+const writeActivity = async (activity: Omit<Activity, "id" | "votes"> & { votes: string }): Promise<string> => {
     const db = getFirestore(firebaseApp);
     // Add a new document in collection "cities"
     const ref = doc(collection(db, "activities"));
@@ -101,17 +87,29 @@ const useCreateActivity = () => {
     if (!user) throw Error("User not defined in useCreateActivity");
 
     return async (activity: { name: string; emoji: string; place: string; time: string; customTime: string | undefined }): Promise<string> => {
+        const initialVotes: VoteCount = { emoji: "👍", count: 1 };
         const id = await writeActivity({
             name: activity.name,
             emoji: activity.emoji,
             place: activity.place,
             time: activity.time,
             customTime: activity.customTime || null,
-            votes: [],
+            votes: JSON.stringify([initialVotes]),
+            group: [],
             owner: user?.name,
         });
         return id;
     };
 };
 
-export { useActivities, useCreateActivity };
+/**
+ * Share the activity with the given groups. Existing groups will be overwritten.
+ */
+const modifyActivityGroups = async (activityId: string, groupsToShareWith: string[]) => {
+    const db = getFirestore(firebaseApp);
+    // Add a new document in collection "cities"
+    const ref = doc(db, "activities", activityId);
+    await setDoc(ref, { group: groupsToShareWith }, { merge: true });
+};
+
+export { useActivities, useCreateActivity, modifyActivityGroups };

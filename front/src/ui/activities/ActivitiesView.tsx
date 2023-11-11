@@ -1,9 +1,12 @@
 import { VStack, Card, Box, HStack, Button, Heading, Text, SlideFade } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import EmojiIcon from "../EmojiIcon";
-import { Activity, useActivities } from "../../controllers/activities";
+import { Activity, VoteCount, useActivities } from "../../controllers/activities";
 import { AnimatePresence, motion } from "framer-motion";
 import ViewFadeWrapper, { PAGE_CHANGE_ANIM } from "../ViewFadeWrapper";
+import { timeModeToEmoji } from "../utils";
+import { useGroups } from "../../controllers/groups";
+import React, { useState } from "react";
 
 const container = {
     hidden: { opacity: 0 },
@@ -23,6 +26,7 @@ const listItem = {
 
 const ActivitiesView = () => {
     const { data: activities } = useActivities();
+    const { data: groups } = useGroups();
 
     return (
         <ViewFadeWrapper styleAbsolutely={false}>
@@ -37,15 +41,37 @@ const ActivitiesView = () => {
                         </Text>
                     </SlideFade>
                     {/*isLoading && <Text>Loading...</Text>*/}
-                    {activities && (
+                    {activities && groups && (
                         <motion.div variants={container} initial="hidden" animate="show">
                             <VStack spacing={4} align="stretch">
                                 <AnimatePresence>
-                                    {activities.map(a => (
-                                        <motion.div key={a.id} variants={listItem}>
-                                            <Suggestion activity={a} />
-                                        </motion.div>
-                                    ))}
+                                    {groups.map(g => {
+                                        const activitiesInGroup = activities.filter(a => a.group.includes(g.id));
+                                        return (
+                                            <React.Fragment key={g.id}>
+                                                <Heading
+                                                    fontSize="sm"
+                                                    borderBottom="1px solid #D3D3D3"
+                                                    color="#727272"
+                                                    paddingBottom="2"
+                                                    paddingTop="2">
+                                                    {g.name}
+                                                </Heading>
+                                                {activitiesInGroup.map(a => (
+                                                    <motion.div key={a.id} variants={listItem}>
+                                                        <Suggestion activity={a} />
+                                                    </motion.div>
+                                                ))}
+                                                {activitiesInGroup.length === 0 && (
+                                                    <Text fontSize="sm" textAlign="center" fontWeight="bold" color="#888888">
+                                                        No suggestions yet.
+                                                        <br />
+                                                        What would you like to do?
+                                                    </Text>
+                                                )}
+                                            </React.Fragment>
+                                        );
+                                    })}
                                 </AnimatePresence>
                             </VStack>
                         </motion.div>
@@ -62,28 +88,27 @@ const ActivitiesView = () => {
 };
 
 const Suggestion = (props: { activity: Activity }) => {
-    const { id, name, owner, votes } = props.activity;
+    const { id, name, owner, votes, time } = props.activity;
+    const { emoji: timeEmoji } = timeModeToEmoji(time);
     return (
         <Card padding={2}>
             <Link to={`/activities/${id}`}>
                 <HStack>
-                    <EmojiIcon>⚽</EmojiIcon>
+                    <EmojiIcon>{props.activity.emoji}</EmojiIcon>
                     <VStack flex="1" alignItems="right" justifyContent="center" spacing={0}>
                         <Text fontSize="1rem">{name}</Text>
-                        <Text fontSize="0.6rem" color="#555555">
+                        <Text fontSize="0.7rem" color="#555555">
                             {owner}
                         </Text>
                     </VStack>
-                    <Text fontSize="0.6rem" color="#555555" alignSelf="start" padding={1}>
-                        34 min ago
+                    <Text fontSize="0.8rem" color="#555555" alignSelf="start" padding={1}>
+                        {timeEmoji}
                     </Text>
                 </HStack>
             </Link>
             <HStack spacing={1} marginTop="1rem" flexWrap="wrap">
-                {votes.map(({ emoji, count }) => (
-                    <Button size="xs" variant="outline" key={emoji} paddingRight={3} borderRadius="full" onClick={() => {}}>
-                        {emoji} {count}
-                    </Button>
+                {votes.map(v => (
+                    <EmojiCount votes={v} key={v.emoji} />
                 ))}
                 <Box flex="1"></Box>
                 <Link to={`/activities/${id}`}>
@@ -93,6 +118,21 @@ const Suggestion = (props: { activity: Activity }) => {
                 </Link>
             </HStack>
         </Card>
+    );
+};
+
+const EmojiCount = (props: { votes: VoteCount }) => {
+    const [isAdded, setIsAdded] = useState(false);
+    return (
+        <Button
+            size="xs"
+            variant="outline"
+            colorScheme={isAdded ? "blue" : undefined}
+            paddingRight={3}
+            borderRadius="full"
+            onClick={() => setIsAdded(b => !b)}>
+            {props.votes.emoji} {props.votes.count + (isAdded ? 1 : 0)}
+        </Button>
     );
 };
 

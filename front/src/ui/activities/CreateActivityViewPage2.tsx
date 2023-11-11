@@ -2,20 +2,37 @@ import { Box, Button, HStack, Heading, VStack } from "@chakra-ui/react";
 import { useNavigate, useParams } from "react-router-dom";
 import ViewFadeWrapper from "../ViewFadeWrapper";
 import { FormEvent, useState } from "react";
+import { useGroups } from "../../controllers/groups";
+import { modifyActivityGroups } from "../../controllers/activities";
 
 const CreateActivityViewPage2 = () => {
     const navigate = useNavigate();
     const params = useParams();
+
+    const { data: groups } = useGroups();
+
+    const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
+    const onToggleGroup = (groupId: string) => {
+        setSelectedGroups(selected => {
+            if (selected.includes(groupId)) {
+                return selected.filter(s => s != groupId);
+            } else {
+                return [...selected, groupId];
+            }
+        });
+    };
 
     //const { register: registerInput, handleSubmit } = useForm<FormValues>();
     //const createActivity = useCreateActivity();
     // const onSubmit = handleSubmit((values: FormValues) => createActivity({ name: values.name, emoji, place: values.place, time: values.time }));
     const onSubmit = (e: FormEvent) => {
         e.preventDefault();
-        navigate(`/activities/${params.id}`);
+        modifyActivityGroups(params.id!, selectedGroups).then(() => {
+            navigate(`/activities/${params.id}`);
+        });
     };
 
-    const groups = ["Class 2b", "Local skaters", "Football team", "Primary School"];
+    //const groups = ["Class 2b", "Local skaters", "Football team", "Primary School"];
     const friends = ["Artur", "Essi", "Tuomas", "Tina", "Kaappo", "Peter", "Veeti", "Samu", "Petteri", "James"];
 
     return (
@@ -31,9 +48,7 @@ const CreateActivityViewPage2 = () => {
                     </Heading>
 
                     <VStack alignItems="stretch">
-                        {groups.map(groupName => (
-                            <DestinationButton text={groupName} key={groupName} />
-                        ))}
+                        {groups && groups.map(({ id, name }) => <DestinationButton text={name} key={id} onToggle={() => onToggleGroup(id)} />)}
                     </VStack>
 
                     <Heading fontSize="lg" paddingTop="3" paddingBottom="2" textAlign="center">
@@ -55,13 +70,16 @@ const CreateActivityViewPage2 = () => {
     );
 };
 
-const DestinationButton = (props: { text: string; width?: string }) => {
+const DestinationButton = (props: { text: string; width?: string; onToggle?: () => void }) => {
     const [sel, setSel] = useState(false);
     return (
         <Button
             variant={sel ? "solid" : "outline"}
             colorScheme={sel ? "blue" : "gray"}
-            onClick={() => setSel(b => !b)}
+            onClick={() => {
+                setSel(b => !b);
+                if (props.onToggle) props.onToggle();
+            }}
             justifyContent="start"
             width={props.width}>
             <VStack background="#aaaaaa" width="1.5rem" height="1.5rem" justifyContent="center" marginRight="0.3rem" borderRadius="full"></VStack>
