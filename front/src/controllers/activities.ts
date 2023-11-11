@@ -1,9 +1,10 @@
 import { collection, doc, getFirestore, query, setDoc } from "@firebase/firestore";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { firebaseApp } from "../main";
 import UserContext from "../usercontext";
-import { getDocs } from "firebase/firestore";
+import { DocumentData, getDocs, onSnapshot, QueryDocumentSnapshot, QuerySnapshot } from "firebase/firestore";
+import { User } from "./user.tsx";
 
 export type VoteCount = {
     emoji: string;
@@ -20,6 +21,7 @@ export type Activity = {
     owner: string;
     votes: Array<VoteCount>;
     group: Array<string>;
+    ongoing?: boolean;
 };
 
 /**
@@ -44,6 +46,25 @@ const fetchActivities = async (): Promise<Activity[]> => {
 
 const useActivities = () => {
     const user = useContext(UserContext);
+
+    const db = getFirestore(firebaseApp);
+
+    const [allActivities, setAllActivities] = useState<User[]>([]);
+
+    useEffect(() => {
+        const q = query(collection(db, "activities"));
+
+        const unsubscribe = onSnapshot(q, (snapshot: QuerySnapshot<DocumentData>) => {
+            const updatedActivities: Activity[] = [];
+            snapshot.forEach((doc: QueryDocumentSnapshot<unknown>) => updatedActivities.push(doc.data() as Activity));
+
+            setAllActivities(updatedActivities);
+            console.log("Updated activities!");
+        });
+        return unsubscribe;
+    }, [db]);
+
+    return { data: allActivities, isLoading: false };
 
     // const queryKey: fetchActivitiesQueryKey = ["activities", user?.id];
     // return useQuery(queryKey, fetchActivities, { refetchInterval: 1000 });

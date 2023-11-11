@@ -24,6 +24,8 @@ const OngoingActivityView = () => {
     const activity = activities[0];
     console.log(activity);
     let timeModeToEmoji1 = timeModeToEmoji(activity.time);
+
+    console.log(activity.ongoing);
     return (
         <Flex direction={"column"} style={{ height: "100%" }} gap={10}>
             <GridItem flex={"1"} mt={10} mx={4}>
