@@ -29,7 +29,7 @@ const ActivitiesView = () => {
     const { data: groups } = useGroups();
 
     return (
-        <ViewFadeWrapper styleAbsolutely={false}>
+        <ViewFadeWrapper styleAbsolutely={true}>
             <VStack height="100%" alignItems="stretch" spacing="0">
                 <Box padding="4" flex="1" overflowY="auto">
                     <SlideFade in={true} offsetX={100} offsetY={0} delay={PAGE_CHANGE_ANIM}>
@@ -41,7 +41,7 @@ const ActivitiesView = () => {
                         </Text>
                     </SlideFade>
                     {/*isLoading && <Text>Loading...</Text>*/}
-                    {activities && groups && (
+                    {activities && activities.length > 0 && groups && (
                         <motion.div variants={container} initial="hidden" animate="show">
                             <VStack spacing={4} align="stretch">
                                 <AnimatePresence>

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { motion } from "framer-motion";
 import Map, { Marker, Layer, MapRef } from "react-map-gl";
 

@@ -314,6 +314,9 @@ exports.moveUsers = onRequest({ location: "europe-north1" }, async (request, res
         // Wait 1 second
         //await new Promise(resolve => setTimeout(resolve, 200));
     }
+
+    // Wait 1 second
+    await new Promise(resolve => setTimeout(resolve, 1000));
     // Set all activities as active
     const activities = await admin.firestore().collection('activities').get();
     for (const activity of activities.docs) {

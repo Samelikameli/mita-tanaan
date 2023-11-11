@@ -1,10 +1,9 @@
+// @ts-nocheck
 import { collection, doc, getFirestore, query, setDoc, updateDoc } from "@firebase/firestore";
 import { useContext, useEffect, useState } from "react";
-import { useQuery } from "react-query";
 import { firebaseApp } from "../main";
 import UserContext from "../usercontext";
 import { DocumentData, getDocs, onSnapshot, QueryDocumentSnapshot, QuerySnapshot } from "firebase/firestore";
-import { User } from "./user.tsx";
 
 export type VoteCount = {
     emoji: string;

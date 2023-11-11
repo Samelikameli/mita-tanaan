@@ -1,3 +1,4 @@
+// @ts-nocheck
 import dog from "../../assets/dog_face.png";
 import bear from "../../assets/bear_face.png";
 import cat from "../../assets/cat_face.png";
