@@ -9,6 +9,10 @@ import IntroView from "./ui/intro/IntroView.tsx";
 import { AnimatePresence } from "framer-motion";
 import OngoingActivityView from "./ui/activities/OngoingActivityView.tsx";
 import { Box } from "@chakra-ui/react";
+import CreateActivityView from "./ui/activities/CreateActivityView.tsx";
+import ChallengesView from "./ui/challenges/ChallengesView.tsx";
+import SingleChallengeView from "./ui/challenges/SingleChallengeView.tsx";
+import RecordChallengeView from "./ui/challenges/RecordChallengeView.tsx";
 
 const App = () => {
     //TODO: rekisteröintintisivu jos !userExists
@@ -35,10 +39,14 @@ const AppRoutes = () => {
     return (
         <AnimatePresence initial={false}>
             <Routes location={location} key={location.pathname}>
-                <Route path="/" element={<IntroView />} key="/" />
-                <Route path="/activities" element={<ActivitiesView />} key="/activities" />
-                <Route path="/activities/:id" element={<SingleActivityView />} key="/activities/:id" />
-                <Route path="/ongoing" element={<OngoingActivityView />} key="/ongoing" />
+                <Route path="/" element={<IntroView />} />
+                <Route path="/activities" element={<ActivitiesView />} />
+                <Route path="/activities/:id" element={<SingleActivityView />} />
+                <Route path="/activities/create" element={<CreateActivityView />} />
+                <Route path="/ongoing" element={<OngoingActivityView />} />
+                <Route path="/challenges" element={<ChallengesView />} />
+                <Route path="/challenges/:id" element={<SingleChallengeView />} />
+                <Route path="/challenges/record" element={<RecordChallengeView />} />
             </Routes>
         </AnimatePresence>
     );
