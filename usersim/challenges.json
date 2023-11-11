@@ -1,0 +1,25 @@
+{
+    "challenges": [
+        {
+            "name": "Häkkää",
+            "videoURL": "https://www.youtube.com/watch?v=Jy-P_tPPTn8",
+            "visibility": "public",
+            "sharedToGroupIds":[],
+            "sharedToUserIds":[]
+        },
+        {
+            "name": "Leikitään",
+            "videoURL": "https://www.youtube.com/watch?v=Jy-P_tPPTn8",
+            "visibility": "group",
+            "sharedToGroupIds":[],
+            "sharedToUserIds":[]
+        },
+        {
+            "name": "Futispeli",
+            "videoURL": "https://www.youtube.com/watch?v=Jy-P_tPPTn8",
+            "visibility": "group",
+            "sharedToGroupIds":[],
+            "sharedToUserIds":[]
+        }
+    ]
+}

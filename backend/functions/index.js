@@ -203,40 +203,41 @@ function deg2rad(deg) {
 
 function randomBetween(min, max) {
     return Math.random() * (max - min) + min;
-  }
+}
 
 exports.onUserWrite = onDocumentWritten({ document: "users/{userId}", location: "europe-north1" }, async (event) => {
-    return;
-    const userId = event.params.userId;
+
     const userData = event.data.after.data();
-    logger.info(`User ${userId} updated: ${JSON.stringify(userData)}`);
+    const userId = event.params.userId;
+    if (event.data.before.data().groups !== event.data.after.data().groups) {
+        console.log("Groups changed");
 
+        diff_add = event.data.after.data().groups.filter(x => !event.data.before.data().groups.includes(x));
 
+        diff_remove = event.data.before.data().groups.filter(x => !event.data.after.data().groups.includes(x));
 
-    logger.info(`Getting nearby users for ${userId}`);
-    const userRef = admin.firestore().collection('users').doc(userId);
-    const user = await userRef.get();
-    const userLocation = user.data().location;
-    const username = user.data().name;
+        diff_add.forEach((group) => {
+            
+            admin.firestore().doc("groups/" + group).get().then((doc) => {
+                if (!doc.exists) {
+                    admin.firestore().doc("groups/" + group).set({
+                        users: [userData.name],
+                        name: "New group"
+                    });
+                }});
 
+            admin.firestore().doc("groups/" + group).update({
+                users: admin.firestore.FieldValue.arrayUnion(userId)
+            });
+        });
 
-    const users = await admin.firestore().collection('users').get();
-    const nearbyUsers = [];
-
-    for (const user of users.docs) {
-        const location = user.data().location;
-        if (!location) {
-            continue;
-        }
-        const distance = getDistanceFromLatLonInKm(userLocation.latitude, userLocation.longitude, location.latitude, location.longitude);
-        console.log(distance + " " + user.data().name);
-        if (distance < 5 && 'name' in user.data() && user.data().name !== username) {
-            nearbyUsers.push(user.data());
-        }
+        diff_remove.forEach((group) => {
+            admin.firestore().doc("groups/" + group).update({
+                users: admin.firestore.FieldValue.arrayRemove(userId)
+            });
+        });
     }
-    console.log(nearbyUsers);
-}
-);
+});
 
 
 exports.getNearbyUsers = onRequest({ location: "europe-north1" }, async (request, response) => {
@@ -276,8 +277,8 @@ exports.createUsers = onRequest({ location: "europe-north1" }, async (request, r
 exports.resetPositions = onRequest({ location: "europe-north1" }, async (request, response) => {
     const users = await admin.firestore().collection('users').get();
     for (const user of users.docs) {
-        for(home of homes){
-            if(user.data().name === home.name){
+        for (home of homes) {
+            if (user.data().name === home.name) {
                 const data = {
                     location: new admin.firestore.GeoPoint(home.latitude, home.longitude)
                 }
@@ -297,13 +298,13 @@ exports.moveUsers = onRequest({ location: "europe-north1" }, async (request, res
     const users = await admin.firestore().collection('users').get();
     const userArray = [];
     for (const user of users.docs) {
-        userArray.push({"data": user, "initialLocation": user.data().location});
+        userArray.push({ "data": user, "initialLocation": user.data().location });
     }
 
-    for (var i = 1; i <= steps; i++){
+    for (var i = 1; i <= steps; i++) {
         for (const user of userArray) {
-            const dLat = (user.initialLocation.latitude - latitude)/steps;
-            const dLon = (user.initialLocation.longitude - longitude)/steps;
+            const dLat = (user.initialLocation.latitude - latitude) / steps;
+            const dLon = (user.initialLocation.longitude - longitude) / steps;
 
             const data = {
                 location: new admin.firestore.GeoPoint(user.initialLocation.latitude - dLat * i + randomBetween(-0.1, 0.1) * dLat, user.initialLocation.longitude - dLon * i + randomBetween(-0.1, 0.1) * dLon)
