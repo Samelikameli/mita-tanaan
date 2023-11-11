@@ -36,7 +36,7 @@ const ChallengesView = () => {
     const navigate = useNavigate();
     useChallenges();
     return (
-        <ViewFadeWrapper styleAbsolutely={false}>
+        <ViewFadeWrapper styleAbsolutely={true}>
             <HStack>
                 <GroupIcon />
                 <GroupIcon />
