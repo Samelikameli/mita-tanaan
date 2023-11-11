@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import EmojiIcon from "../EmojiIcon";
 import { Activity, useActivities } from "../../controllers/activities";
 import { AnimatePresence, motion } from "framer-motion";
+import ViewFadeWrapper from "../ViewFadeWrapper";
 
 const container = {
     hidden: { opacity: 0 },
@@ -24,7 +25,7 @@ const ActivitiesView = () => {
     const { data: activities, isLoading } = useActivities();
 
     return (
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} style={{ height: "100%" }}>
+        <ViewFadeWrapper>
             <VStack background="orange.100" height="100%" alignItems="stretch" spacing="0">
                 <Box padding="4" flex="1" overflowY="auto">
                     <SlideFade in={true} offsetX={100} offsetY={0}>
@@ -56,7 +57,7 @@ const ActivitiesView = () => {
                     </Box>
                 </motion.div>
             </VStack>
-        </motion.div>
+        </ViewFadeWrapper>
     );
 };
 
@@ -85,9 +86,11 @@ const Suggestion = (props: { activity: Activity }) => {
                     </Button>
                 ))}
                 <Box flex="1"></Box>
-                <Button size="xs" colorScheme="blue">
-                    Open
-                </Button>
+                <Link to={`/activities/${id}`}>
+                    <Button size="xs" colorScheme="blue">
+                        Open
+                    </Button>
+                </Link>
             </HStack>
         </Card>
     );
