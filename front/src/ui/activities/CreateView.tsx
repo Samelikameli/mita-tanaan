@@ -1,33 +1,25 @@
 import {
-    Box,
-    Button,
     Card,
     CardBody,
     CardFooter,
     CardHeader,
     Container,
-    Flex,
+    Grid,
+    GridItem,
     Heading,
     IconButton,
     ListItem,
     SlideFade,
     Text,
     UnorderedList,
-    VStack,
-    color,
-    Center,
-    Stack,
-    Grid,
-    GridItem,
 } from "@chakra-ui/react";
 import ViewFadeWrapper, { PAGE_CHANGE_ANIM } from "../ViewFadeWrapper.tsx";
-import { AnimatePresence, motion } from "framer-motion";
 import { AddIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
 
 const MyCard = ({ onClick, text }) => {
     return (
-        <Card m={4} mb={0} h={"100%"}>
+        <Card mx={4} h={"100%"}>
             <CardHeader>
                 <Heading>{text}</Heading>
             </CardHeader>

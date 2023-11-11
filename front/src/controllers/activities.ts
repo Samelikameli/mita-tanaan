@@ -4,6 +4,8 @@ import { useQuery } from "react-query";
 import AppContext from "../appcontext";
 import { firebaseApp } from "../main";
 import UserContext from "../usercontext";
+import { getDocs } from "firebase/firestore";
+import { act } from "react-dom/test-utils";
 
 export type VoteCount = {
     emoji: string;
@@ -38,7 +40,15 @@ const fetchActivities = async ({ queryKey }: { queryKey: fetchActivitiesQueryKey
     console.log(queryKey);
     const db = getFirestore(firebaseApp);
     const q = query(collection(db, "activities"));
+    const activities = [];
+    const snapshot = await getDocs(q);
+    snapshot.forEach(x => {
+        const paska = x.data();
+        console.log(paska);
+        activities.push(paska);
+    });
 
+    console.log(activities);
     console.log(q);
 
     await sleep(200);
