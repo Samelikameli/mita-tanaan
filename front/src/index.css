@@ -23,6 +23,9 @@
 html, body, #phone, #root {
 	height: 100%;
 }
+#root {
+	position: relative;
+}
 
 html.desktop {
 	height: 100%;

@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 import EmojiIcon from "../EmojiIcon";
 import { Activity, useActivities } from "../../controllers/activities";
 import { AnimatePresence, motion } from "framer-motion";
-import ViewFadeWrapper from "../ViewFadeWrapper";
+import ViewFadeWrapper, { PAGE_CHANGE_ANIM } from "../ViewFadeWrapper";
 
 const container = {
     hidden: { opacity: 0 },
     show: {
         opacity: 1,
-        delay: 0.5,
+        delay: PAGE_CHANGE_ANIM + 0.5,
         transition: {
             staggerChildren: 0.2,
         },
@@ -22,13 +22,13 @@ const listItem = {
 };
 
 const ActivitiesView = () => {
-    const { data: activities, isLoading } = useActivities();
+    const { data: activities } = useActivities();
 
     return (
         <ViewFadeWrapper>
             <VStack background="orange.100" height="100%" alignItems="stretch" spacing="0">
                 <Box padding="4" flex="1" overflowY="auto">
-                    <SlideFade in={true} offsetX={100} offsetY={0}>
+                    <SlideFade in={true} offsetX={100} offsetY={0} delay={PAGE_CHANGE_ANIM}>
                         <Heading fontSize="xl" paddingTop="5">
                             What are we doing today?
                         </Heading>

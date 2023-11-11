@@ -3,7 +3,7 @@ import { useUserFetching } from "./controllers/user.tsx";
 import Register from "./ui/account/Register.tsx";
 import UserContext from "./usercontext.tsx";
 import ActivitiesView from "./ui/activities/ActivitiesView.tsx";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import SingleActivityView from "./ui/activities/SingleActivityView.tsx";
 import IntroView from "./ui/intro/IntroView.tsx";
 import { AnimatePresence } from "framer-motion";
@@ -23,16 +23,24 @@ const App = () => {
     return (
         <UserContext.Provider value={user}>
             <BrowserRouter>
-                <AnimatePresence>
-                    <Routes>
-                        <Route path="/" element={<IntroView />} />
-                        <Route path="/activities" element={<ActivitiesView />} />
-                        <Route path="/activities/:id" element={<SingleActivityView />} />
-                        <Route path="/ongoing" element={<OngoingActivityView />} />
-                    </Routes>
-                </AnimatePresence>
+                <AppRoutes />
             </BrowserRouter>
         </UserContext.Provider>
+    );
+};
+
+const AppRoutes = () => {
+    const location = useLocation();
+    console.log(location.pathname);
+    return (
+        <AnimatePresence initial={false}>
+            <Routes location={location} key={location.pathname}>
+                <Route path="/" element={<IntroView />} key="/" />
+                <Route path="/activities" element={<ActivitiesView />} key="/activities" />
+                <Route path="/activities/:id" element={<SingleActivityView />} key="/activities/:id" />
+                <Route path="/ongoing" element={<OngoingActivityView />} key="/ongoing" />
+            </Routes>
+        </AnimatePresence>
     );
 };
 
