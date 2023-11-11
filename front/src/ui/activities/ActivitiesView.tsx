@@ -24,37 +24,39 @@ const ActivitiesView = () => {
     const { data: activities, isLoading } = useActivities();
 
     return (
-        <VStack background="orange.100" height="100%" alignItems="stretch" spacing="0">
-            <Box padding="4" flex="1" overflowY="auto">
-                <SlideFade in={true} offsetX={100} offsetY={0}>
-                    <Heading fontSize="xl" paddingTop="5">
-                        What are we doing today?
-                    </Heading>
-                    <Text fontSize="m" paddingBottom="4">
-                        Here are your friends' suggestions
-                    </Text>
-                </SlideFade>
-                {/*isLoading && <Text>Loading...</Text>*/}
-                {activities && (
-                    <motion.div variants={container} initial="hidden" animate="show">
-                        <VStack spacing={4} align="stretch">
-                            <AnimatePresence>
-                                {activities.map(a => (
-                                    <motion.div key={a.id} variants={listItem}>
-                                        <Suggestion activity={a} />
-                                    </motion.div>
-                                ))}
-                            </AnimatePresence>
-                        </VStack>
-                    </motion.div>
-                )}
-            </Box>
-            <motion.div initial={{ y: 100 }} animate={{ y: 0 }} transition={{ duration: 0.5, bounce: 0 }}>
-                <Box background="white" padding="3" textAlign="center" boxShadow="0 0 1rem rgba(0,0,0,0.3)" z-index="100" position="relative">
-                    <Button colorScheme="blue">Add new suggestion</Button>
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} style={{ height: "100%" }}>
+            <VStack background="orange.100" height="100%" alignItems="stretch" spacing="0">
+                <Box padding="4" flex="1" overflowY="auto">
+                    <SlideFade in={true} offsetX={100} offsetY={0}>
+                        <Heading fontSize="xl" paddingTop="5">
+                            What are we doing today?
+                        </Heading>
+                        <Text fontSize="m" paddingBottom="4">
+                            Here are your friends' suggestions
+                        </Text>
+                    </SlideFade>
+                    {/*isLoading && <Text>Loading...</Text>*/}
+                    {activities && (
+                        <motion.div variants={container} initial="hidden" animate="show">
+                            <VStack spacing={4} align="stretch">
+                                <AnimatePresence>
+                                    {activities.map(a => (
+                                        <motion.div key={a.id} variants={listItem}>
+                                            <Suggestion activity={a} />
+                                        </motion.div>
+                                    ))}
+                                </AnimatePresence>
+                            </VStack>
+                        </motion.div>
+                    )}
                 </Box>
-            </motion.div>
-        </VStack>
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
+                    <Box background="white" padding="3" textAlign="center" boxShadow="0 0 1rem rgba(0,0,0,0.3)" z-index="100" position="relative">
+                        <Button colorScheme="blue">Add new suggestion</Button>
+                    </Box>
+                </motion.div>
+            </VStack>
+        </motion.div>
     );
 };
 
