@@ -1,0 +1,188 @@
+{
+    "users": [
+        {
+            "name": "Lauttasaari",
+            "avatar": "dog",
+            "latitude": 60.157236,
+            "longitude": 24.862941,
+            "groups": [],
+            "age": 12
+        },
+        {
+            "name": "Kamppi",
+            "avatar": "bear",
+            "latitude": 60.1699,
+            "longitude": 24.9326,
+            "groups": [],
+            "age": 12
+        },
+        {
+            "name": "Kallio",
+            "avatar": "cat",
+            "latitude": 60.1820,
+            "longitude": 24.9493,
+            "groups": [],
+            "age": 12
+        },
+        {
+            "name": "Töölö",
+            "avatar": "fox",
+            "latitude": 60.1920,
+            "longitude": 24.9161,
+            "groups": [],
+            "age": 12
+        },
+        {
+            "name": "Sörnäinen",
+            "avatar": "koala",
+            "latitude": 60.1872,
+            "longitude": 24.9617,
+            "groups": [],
+            "age": 12
+        },
+        {
+            "name": "Pasila",
+            "avatar": "lion",
+            "latitude": 60.1988,
+            "longitude": 24.9322,
+            "groups": [],
+            "age": 12
+        },
+        {
+            "name": "Käpylä",
+            "avatar": "panda",
+            "latitude": 60.2100,
+            "longitude": 24.9562,
+            "groups": [],
+            "age": 12
+        },
+        {
+            "name": "Malmi",
+            "avatar": "pig",
+            "latitude": 60.2512,
+            "longitude": 25.0056,
+            "groups": [],
+            "age": 12
+        },
+        {
+            "name": "Herttoniemi",
+            "avatar": "tiger",
+            "latitude": 60.1943,
+            "longitude": 25.0296,
+            "groups": [],
+            "age": 12
+        },
+        {
+            "name": "Kontula",
+            "avatar": "dog",
+            "latitude": 60.2374,
+            "longitude": 25.0830,
+            "groups": [],
+            "age": 12
+        },
+        {
+            "name": "Itäkeskus",
+            "avatar": "bear",
+            "latitude": 60.2093,
+            "longitude": 25.0830,
+            "groups": [],
+            "age": 12
+        },
+        {
+            "name": "Mellunmäki",
+            "avatar": "cat",
+            "latitude": 60.2299,
+            "longitude": 25.1131,
+            "groups": [],
+            "age": 12
+        },
+        {
+            "name": "Vuosaari",
+            "avatar": "fox",
+            "latitude": 60.2117,
+            "longitude": 25.1673,
+            "groups": [],
+            "age": 12
+        },
+        {
+            "name": "Kannelmäki",
+            "avatar": "koala",
+            "latitude": 60.2395,
+            "longitude": 24.8743,
+            "groups": [],
+            "age": 12
+        },
+        {
+            "name": "Pitäjänmäki",
+            "avatar": "lion",
+            "latitude": 60.2200,
+            "longitude": 24.8750,
+            "groups": [],
+            "age": 12
+        },
+        {
+            "name": "Malminkartano",
+            "avatar": "panda",
+            "latitude": 60.2512,
+            "longitude": 24.8799,
+            "groups": [],
+            "age": 12
+        },
+        {
+            "name": "Pohjois-Haaga",
+            "avatar": "pig",
+            "latitude": 60.2299,
+            "longitude": 24.8947,
+            "groups": [],
+            "age": 12
+        },
+        {
+            "name": "Huopalahti",
+            "avatar": "tiger",
+            "latitude": 60.2221,
+            "longitude": 24.9051,
+            "groups": [],
+            "age": 12
+        },
+        {
+            "name": "Paloheinä",
+            "avatar": "dog",
+            "latitude": 60.2448,
+            "longitude": 24.9099,
+            "groups": [],
+            "age": 12
+        },
+        {
+            "name": "Oulunkylä",
+            "avatar": "bear",
+            "latitude": 60.2299,
+            "longitude": 24.9628,
+            "groups": [],
+            "age": 12
+        },
+        {
+            "name": "Pukinmäki",
+            "avatar": "cat",
+            "latitude": 60.2399,
+            "longitude": 24.9799,
+            "groups": [],
+            "age": 12
+        },
+        {
+            "name": "Tapanila",
+            "avatar": "fox",
+            "latitude": 60.2599,
+            "longitude": 24.9799,
+            "groups": [],
+            "age": 12
+        },
+        {
+            "name": "Puistola",
+            "avatar": "koala",
+            "latitude": 60.2599,
+            "longitude": 25.0299,
+            "groups": [],
+            "age": 12
+        }
+    ]
+}
