@@ -21,46 +21,6 @@ export type Activity = {
     votes: Array<VoteCount>;
 };
 
-const mockVotes = [
-    { emoji: "🔥", count: 12 },
-    { emoji: "👍", count: 5 },
-];
-
-const mockActivities: Activity[] = [
-    {
-        id: "0",
-        emoji: "⚽",
-        name: "Football after school?",
-        owner: "Artur Skwarek",
-        place: "Koulun piha",
-        time: "after-school",
-        customTime: null,
-        votes: mockVotes,
-    },
-    {
-        id: "1",
-        emoji: "",
-        name: "Ice hockey practice together",
-        owner: "Artur Skwarek",
-        place: "Rink at school",
-        time: "after-school",
-        customTime: null,
-        votes: mockVotes,
-    },
-    {
-        id: "2",
-        emoji: "🛹",
-        name: "Skateboarding at the mall",
-        owner: "Veeti Roponen",
-        place: "Shop Shop Mall",
-        time: "custom",
-        customTime: "16:00",
-        votes: mockVotes,
-    },
-    { id: "3", emoji: "", name: "Hengailu", owner: "Artur Skwarek", place: "", time: "after-school", customTime: null, votes: mockVotes },
-    { id: "4", emoji: "", name: "Hengailu", owner: "Artur Skwarek", place: "", time: "after-school", customTime: null, votes: mockVotes },
-];
-
 type fetchActivitiesQueryKey = ["activities", string | undefined];
 
 const fetchActivities = async ({ queryKey }: { queryKey: fetchActivitiesQueryKey }): Promise<Activity[]> => {
@@ -70,16 +30,15 @@ const fetchActivities = async ({ queryKey }: { queryKey: fetchActivitiesQueryKey
     const activities: Activity[] = [];
     const snapshot = await getDocs(q);
     snapshot.forEach(x => {
-        const paska = {
-            id: x.id,
+        const a = {
             ...x.data(),
+            id: x.id,
+            votes: JSON.parse(x.data().votes),
         } as Activity;
-        console.log(paska);
-        activities.push(paska);
+        activities.push(a);
     });
     console.log(activities);
-    //return activities;
-    return mockActivities;
+    return activities;
 };
 
 const useActivities = () => {
