@@ -290,8 +290,8 @@ exports.resetPositions = onRequest({ location: "europe-north1" }, async (request
 });
 
 exports.moveUsers = onRequest({ location: "europe-north1" }, async (request, response) => {
-    const longitude = Number(request.query.longitude);
     const latitude = Number(request.query.latitude);
+    const longitude = Number(request.query.longitude);
 
     const steps = Number(request.query.steps)
 
@@ -314,6 +314,12 @@ exports.moveUsers = onRequest({ location: "europe-north1" }, async (request, res
         // Wait 1 second
         //await new Promise(resolve => setTimeout(resolve, 200));
     }
-
-    response.status(200).send(longitude + " " + latitude);
+    // Set all activities as active
+    const activities = await admin.firestore().collection('activities').get();
+    for (const activity of activities.docs) {
+        await activity.ref.update({
+            ongoing: true
+        });
+    }
+    response.status(200).send(latitude + " " + longitude);
 });
