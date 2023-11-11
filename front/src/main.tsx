@@ -8,6 +8,8 @@ import App from "./App.tsx";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { theme } from "./theme.ts";
 
+import "mapbox-gl/dist/mapbox-gl.css";
+
 const app = initializeApp(JSON.parse(import.meta.env.VITE_FIREBASE_AUTH ?? ""));
 
 // Create a client
