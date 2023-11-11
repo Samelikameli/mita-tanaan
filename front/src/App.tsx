@@ -1,11 +1,11 @@
 import "./App.css";
 import { useUserFetching } from "./controllers/user.tsx";
-import Register from "./ui/account/register.tsx";
+import Register from "./ui/account/Register.tsx";
 import UserContext from "./usercontext.tsx";
-import ActivitiesView from "./ui/activities/activities-view.tsx";
+import ActivitiesView from "./ui/activities/ActivitiesView.tsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import SingleActivityView from "./ui/activities/single-activity-view.tsx";
-import IntroView from "./ui/intro/intro-view.tsx";
+import SingleActivityView from "./ui/activities/SingleActivityView.tsx";
+import IntroView from "./ui/intro/IntroView.tsx";
 
 const router = createBrowserRouter([
     {
