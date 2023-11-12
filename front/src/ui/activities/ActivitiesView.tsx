@@ -7,9 +7,11 @@ import { AnimatePresence, motion } from "framer-motion";
 import ViewFadeWrapper, { PAGE_CHANGE_ANIM } from "../ViewFadeWrapper";
 import { timeModeToEmoji } from "../utils";
 import { useGroups } from "../../controllers/groups";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
+import Avatar from "../account/Avatar.tsx";
 import ModalEmojiPicker from "../ModalEmojiPicker.tsx";
+import UserContext from "../../usercontext.tsx";
 
 const container = {
     hidden: { opacity: 0 },
@@ -28,21 +30,26 @@ const listItem = {
 };
 
 const ActivitiesView = () => {
+    const user = useContext(UserContext);
     const { data: activities, vote } = useActivities();
     const { data: groups } = useGroups();
 
     return (
         <ViewFadeWrapper styleAbsolutely={true}>
+            <SlideFade in={true} offsetX={100} offsetY={0} delay={PAGE_CHANGE_ANIM}>
+                <Box px={4} pb={4} background={"white"} filter={"drop-shadow(10px, 10px, 2px, black);"}>
+                    {/*<Avatar small={true} animal={user.avatar} />*/}
+                    <Heading fontSize="xl" paddingTop="5" align={"center"} style={{ fontWeight: "bold" }}>
+                        Activities
+                    </Heading>
+
+                    {/*<Text fontSize="m" paddingBottom="4">*/}
+                    {/*    Here are your friends' suggestions*/}
+                    {/*</Text>*/}
+                </Box>
+            </SlideFade>
             <VStack height="100%" alignItems="stretch" spacing="0">
                 <Box padding="4" flex="1" overflowY="auto" paddingBottom="10rem">
-                    <SlideFade in={true} offsetX={100} offsetY={0} delay={PAGE_CHANGE_ANIM}>
-                        <Heading fontSize="xl" paddingTop="5">
-                            What are we doing today?
-                        </Heading>
-                        <Text fontSize="m" paddingBottom="4">
-                            Here are your friends' suggestions
-                        </Text>
-                    </SlideFade>
                     {/*isLoading && <Text>Loading...</Text>*/}
                     {activities && activities.length > 0 && groups && (
                         <motion.div variants={container} initial="hidden" animate="show">
@@ -58,8 +65,9 @@ const ActivitiesView = () => {
                                                         fontSize="sm"
                                                         borderBottom="1px solid #D3D3D3"
                                                         color="#727272"
-                                                        paddingBottom="2"
-                                                        paddingTop="2">
+                                                        // paddingBottom="2"
+                                                        // paddingTop="2"
+                                                    >
                                                         {g.name}
                                                     </Heading>
                                                     {activitiesInGroup.map(a => (
@@ -118,7 +126,7 @@ const Suggestion = (props: { activity: Activity; vote: (activityId: string, emoj
     const { id, name, owner, votes, time } = props.activity;
     const { emoji: timeEmoji } = timeModeToEmoji(time);
     return (
-        <Card padding={2} borderRadius={20}>
+        <Card padding={2} borderRadius={20} margin={0}>
             <Link to={`/activities/${id}`}>
                 <HStack>
                     <EmojiIcon>{props.activity.emoji}</EmojiIcon>
