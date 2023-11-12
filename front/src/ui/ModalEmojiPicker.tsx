@@ -3,17 +3,19 @@ import { Text, Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHe
 type ModalEmojiPickerProps = {
     emoji: string;
     onChoose: (emoji: string) => void;
+    size?: string;
+    fontSize?: string;
 };
 
 const ModalEmojiPicker = (props: ModalEmojiPickerProps) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const emojis =
-        "⚽️🏀🏈⚾️🥎🎾🏐🏉🥏🎱🪀🏓🏸🏒🏑🥍🏏🪃🥅⛳️🪁🏹🎣🤿🥊🥋🎽🛹🛼🛷⛸🥌🎿⛷🏂🪂🏋️‍♀️🏋️🏋️‍♂️🤼‍♀️🤼🤼‍♂️🤸‍♀️🤸🤸‍♂️⛹️‍♀️⛹️⛹️‍♂️🤺🤾‍♀️🤾🤾‍♂️🏌️‍♀️🏌️🏌️‍♂️🏇🧘‍♀️🧘🧘‍♂️🏄‍♀️🏄🏄‍♂️🏊‍♀️🏊🏊‍♂️🤽‍♀️🤽🤽‍♂️🚣‍♀️🚣🚣‍♂️🧗‍♀️🧗🧗‍♂️🚵‍♀️🚵🚵‍♂️🚴‍♀️🚴🚴‍♂️🏆🥇🥈🥉🏅🎖🏵🎗🎫🎟🎪🤹🤹‍♂️🤹‍♀️🎭🩰🎨🎬🎤🎧🎼🎹🥁🪘🪇🎷🎺🪗🎸🪕🎻🪈🎲♟🎯🎳🎮🎰🧩";
+        ["⚽️","🏀","🏈","⚾️","🥎","🎾","🏐","🏉","🥏","🎱","🪀","🏓","🏸","🏒","🏑","🥍","🏏","🪃","🥅","⛳️","🪁","🏹","🎣","🤿","🥊","🥋","🎽","🛹","🛼","🛷","🥌","🎿","🏂","🪂","🏋️","🤼","🤸","⛹️","🤺","🤾","🏌️","🧘","🏄","🏊","🤽","🚣","🧗","🚵","🚴","🏆","🥇","🎖","🎗","🎫","🎟","🎪","🤹","🎭","🩰","🎨","🎬","🎤","🎧","🎼","🎹","🥁","🪘","🪇","🎷","🎺","🪗","🎸","🪕","🎻","🪈","🎲","♟","🎯","🎳","🎮","🎰","🧩"];
 
     return (
         <div>
-            <Button onClick={onOpen} size="lg">
-                <Text fontSize="2rem">{props.emoji}</Text>
+            <Button onClick={onOpen} size={props.size || "lg"} variant="outline">
+                <Text fontSize={props.fontSize || "2em"}>{props.emoji}</Text>
             </Button>
 
             <Modal isOpen={isOpen} onClose={onClose}>
@@ -23,7 +25,7 @@ const ModalEmojiPicker = (props: ModalEmojiPickerProps) => {
                     <ModalCloseButton />
                     <ModalBody>
                         <HStack flexWrap="wrap">
-                            {[...emojis].map((emoji, index) => (
+                            {emojis.map((emoji, index) => (
                                 <Button
                                     onClick={() => {
                                         props.onChoose(emoji);

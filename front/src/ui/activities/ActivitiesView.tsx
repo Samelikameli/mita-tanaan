@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { VStack, Card, Box, HStack, Button, Heading, Text, SlideFade } from "@chakra-ui/react";
+import { VStack, Card, Box, HStack, Button, Heading, Text, SlideFade, Modal } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import EmojiIcon from "../EmojiIcon";
 import { Activity, VoteCount, useActivities } from "../../controllers/activities";
@@ -8,6 +8,8 @@ import ViewFadeWrapper, { PAGE_CHANGE_ANIM } from "../ViewFadeWrapper";
 import { timeModeToEmoji } from "../utils";
 import { useGroups } from "../../controllers/groups";
 import React, { useState } from "react";
+
+import ModalEmojiPicker from "../ModalEmojiPicker.tsx"
 
 const container = {
     hidden: { opacity: 0 },
@@ -116,6 +118,7 @@ const Suggestion = (props: { activity: Activity; vote: (activityId: string, emoj
                 {votes.map(v => (
                     <EmojiCount vote={v} key={v.emoji} onClick={() => props.vote(props.activity.id, v.emoji, !v?.haveIVoted)} />
                 ))}
+                <ModalEmojiPicker size="xs" onChoose={(emoji) => {props.vote(props.activity.id, emoji, true)}} emoji="+" fontSize="1em"/>
                 <Box flex="1"></Box>
                 <Link to={`/activities/${id}`}>
                     <Button size="xs" colorScheme="blue">
