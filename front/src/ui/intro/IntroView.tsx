@@ -14,7 +14,7 @@ const IntroView = () => {
         <ViewFadeWrapper>
             <VStack justifyContent="center" textAlign="center" height="100%" background="background.100" padding="5">
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8, duration: 1 }}>
-                    <h2 style={{ fontWeight: "bold", fontSize: "1.4rem" }}>What are you going to do today, {user?.name}?</h2>
+                    <h2 style={{ fontWeight: "bold", fontSize: "1.4rem" }}>What are you going to do today?</h2>
                 </motion.div>
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.6, duration: 1 }}>
                     <Button colorScheme="blue" variant="outline" onClick={() => navigate("/home")} marginTop="5" size="sm">
