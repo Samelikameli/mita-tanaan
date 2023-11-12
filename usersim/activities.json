@@ -1,30 +1,6 @@
 {
   "activities": [
     {
-      "emoji": "🛹",
-      "name": "Cool tricks",
-      "description": "Make a backflip",
-      "owner": "Samu Huovinen",
-      "place": "Skate park",
-      "location": {
-        "latitude": 60.199,
-        "longitude": 24.9784
-      },
-      "time": "after-school"
-    },
-    {
-      "emoji": "⚽",
-      "name": "Football match",
-      "owner": "Veeti Roponen",
-      "description": "jalkapalloa yhdessä",
-      "location": {
-        "latitude": 60.1699,
-        "longitude": 24.9384
-      },
-      "time": "custom",
-      "customTime": "13:00"
-    },
-    {
       "emoji": "🍺",
       "name": "Beer after Junction",
       "owner": "Artur Skwarek",
@@ -36,24 +12,11 @@
         "longitude": 24.9384
       }
     },
-
     {
-      "emoji": "🛹",
-      "name": "Skateboarding at the mall",
+      "emoji": "🛏",
+      "name": "Sleep",
       "owner": "Veeti Roponen",
-      "place": "Shop Shop Mall",
-      "time": "custom",
-      "customTime": "16:00",
-      "location": {
-        "latitude": 60.1699,
-        "longitude": 24.9384
-      }
-    },
-    {
-      "emoji": "🏒",
-      "name": "Ice hockey practice together",
-      "owner": "Artur Skwarek",
-      "place": "Rink at school",
+      "place": "Bed",
       "time": "after-school",
       "customTime": null,
       "location": {

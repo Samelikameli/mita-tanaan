@@ -21,13 +21,18 @@ const ActivityDetails = (props: { activity: Activity }) => {
             <Text style={{ fontSize: "120%" }}>
                 {timeModeToEmoji1.emoji} {activity.time === "custom" ? activity.customTime : timeModeToEmoji1.name}
             </Text>
+
+            <Text mt={2} style={{ fontWeight: "bold" }}>
+                Where?
+            </Text>
+            <Text>{activity.place}</Text>
             <br />
-            <Text style={{ fontWeight: "900" }}>Who's coming?</Text>
-            <Flex>
-                {["dog", "cat", "panda"].map(a => (
-                    <Avatar animal={a} small={true} key={a} />
-                ))}
-            </Flex>
+            {/*<Text style={{ fontWeight: "900" }}>Who's coming?</Text>*/}
+            {/*<Flex>*/}
+            {/*    {["dog", "cat", "panda"].map(a => (*/}
+            {/*        <Avatar animal={a} small={true} key={a} />*/}
+            {/*    ))}*/}
+            {/*</Flex>*/}
         </>
     );
 };
