@@ -24,7 +24,7 @@ const ChallengesView = () => {
                 </HStack>
                 <VStack flex="1" justifyContent="center" padding="4">
                     <Text>The challenge feature is still under development - please check out our slide deck and video demo ✨✨✨</Text>
-                    <Text>The "Activites" tab works, try that instead!</Text>
+                    <Text>The "Activities" tab works, try that instead!</Text>
                 </VStack>
             </VStack>
         </ViewFadeWrapper>
