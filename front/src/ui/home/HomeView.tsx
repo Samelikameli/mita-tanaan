@@ -12,7 +12,7 @@ const getTabIndex = (pathName: string) => {
     if (pathName == "/home/activities") return 0;
     if (pathName == "/home/create") return 1;
     if (pathName == "/home/challenges") return 2;
-    return 1;
+    return 0;
 };
 
 const HomeView = () => {

@@ -1,6 +1,6 @@
 import type { GeoPoint } from "firebase/firestore";
 import { addDoc, collection, doc, getDoc, getFirestore } from "firebase/firestore";
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import AppContext from "../appcontext.tsx";
 
 export type User = {
@@ -38,7 +38,6 @@ const useUserFetching = (): {
                     console.log("exists");
                     const data = snapshot.data();
                     const id = snapshot.id;
-                    console.log(data);
                     setUser({ ...data, id, avatar: `human${(id.charCodeAt(0) % 4) + 1}` } as User);
                 }
                 setLoading(false);
@@ -48,15 +47,16 @@ const useUserFetching = (): {
         }
     }, [db, userid, setUser]);
 
-    const register = async (user: Omit<User, "id">) => {
-        const usersRef = collection(db, "users");
-        const newUser = await addDoc(usersRef, user);
-        const newUserId = newUser.id;
-        console.log("created user with id", newUserId);
-        setUserid(newUserId);
-    };
-
-    console.log("in user hook", user, loading);
+    const register = useCallback(
+        async (user: Omit<User, "id">) => {
+            const usersRef = collection(db, "users");
+            const newUser = await addDoc(usersRef, user);
+            const newUserId = newUser.id;
+            console.log("created user with id", newUserId);
+            setUserid(newUserId);
+        },
+        [db],
+    );
 
     return {
         user,

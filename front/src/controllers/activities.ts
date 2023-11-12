@@ -57,9 +57,6 @@ const useActivities = () => {
             const updatedActivities: Activity[] = [];
             snapshot.forEach((doc: QueryDocumentSnapshot<unknown>) => {
                 const data = doc.data();
-
-                console.log("Votes:", data.votes);
-
                 const votes = {};
 
                 Object.keys(data.votes).forEach(voterId => {

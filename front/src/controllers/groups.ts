@@ -31,7 +31,7 @@ const fetchGroups = async (): Promise<Group[]> => {
         } as Group;
         groups.push(a);
     });
-    console.log("Groups", groups);
+
     return groups;
 };
 

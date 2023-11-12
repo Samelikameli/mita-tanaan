@@ -12,12 +12,23 @@ import CreateActivityView from "./ui/activities/CreateActivityView.tsx";
 import HomeView from "./ui/home/HomeView.tsx";
 import CreateActivityViewPage2 from "./ui/activities/CreateActivityViewPage2.tsx";
 import SilentActivityView from "./ui/activities/SilentActivityView.tsx";
+import { GeoPoint } from "firebase/firestore";
+import { useEffect } from "react";
 
 const App = () => {
     //TODO: rekisteröintintisivu jos !userExists
     const { user, loading, userExists, register } = useUserFetching();
 
-    console.log("in app: ", user, userExists);
+    useEffect(() => {
+        if (!userExists && !loading) {
+            console.log("User doesn't exist!");
+            register({
+                name: "anonymous",
+                avatar: "",
+                location: new GeoPoint(60.162051 + Math.random() * 0.00036 * 2 - 0.00036, 24.904892 + Math.random() * 0.00072 * 2 - 0.00072),
+            });
+        }
+    }, [loading, register, userExists]);
 
     if (loading) return <Box background="background.100" height="100%"></Box>;
 

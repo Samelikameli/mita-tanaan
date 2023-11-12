@@ -9,7 +9,7 @@ import { timeModeToEmoji } from "../utils";
 import { useGroups } from "../../controllers/groups";
 import React, { useState } from "react";
 
-import ModalEmojiPicker from "../ModalEmojiPicker.tsx"
+import ModalEmojiPicker from "../ModalEmojiPicker.tsx";
 
 const container = {
     hidden: { opacity: 0 },
@@ -60,14 +60,11 @@ const ActivitiesView = () => {
                                                     paddingTop="2">
                                                     {g.name}
                                                 </Heading>
-                                                {activitiesInGroup.map(a => {
-                                                    console.log("Activity", a);
-                                                    return (
-                                                        <motion.div key={a.id} variants={listItem}>
-                                                            <Suggestion activity={a} vote={vote} />
-                                                        </motion.div>
-                                                    );
-                                                })}
+                                                {activitiesInGroup.map(a => (
+                                                    <motion.div key={a.id} variants={listItem}>
+                                                        <Suggestion activity={a} vote={vote} />
+                                                    </motion.div>
+                                                ))}
                                                 {activitiesInGroup.length === 0 && (
                                                     <Text fontSize="sm" textAlign="center" fontWeight="bold" color="#888888">
                                                         No suggestions yet.
@@ -118,7 +115,15 @@ const Suggestion = (props: { activity: Activity; vote: (activityId: string, emoj
                 {votes.map(v => (
                     <EmojiCount vote={v} key={v.emoji} onClick={() => props.vote(props.activity.id, v.emoji, !v?.haveIVoted)} />
                 ))}
-                <ModalEmojiPicker size="xs" onChoose={(emoji) => {props.vote(props.activity.id, emoji, true)}} emoji="+" fontSize="1em" reaction={true}/>
+                <ModalEmojiPicker
+                    size="xs"
+                    onChoose={emoji => {
+                        props.vote(props.activity.id, emoji, true);
+                    }}
+                    emoji="+"
+                    fontSize="1em"
+                    reaction={true}
+                />
                 <Box flex="1"></Box>
                 <Link to={`/activities/${id}`}>
                     <Button size="xs" colorScheme="blue">
