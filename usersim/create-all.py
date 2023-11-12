@@ -51,6 +51,8 @@ with open("groups.json", "r") as f:
     groups = json.loads(f.read())["groups"]
 
 group_ids = []
+kaapelitehdas_id = None
+
 for group in groups:
     # Randomize members of group
     g = {"name": group["name"], "users": [], "days": [], "avatar": group["avatar"]}
@@ -64,6 +66,9 @@ for group in groups:
 
     print(res[1].id)
     group_ids.append(res[1].id)
+    if kaapelitehdas_id is None:
+        print("paska")
+        kaapelitehdas_id = res[1].id
 
 # Create challenges
 with open("challenges.json", "r") as f:
@@ -94,14 +99,9 @@ for challenge in challenges:
 with open("activities.json", "r") as f:
     activities = json.loads(f.read())["activities"]
 
-{
-    "name": "Leikki",
-    "description": "Tässä videossa näytetään miten tehdään kuperkeikka",
-    "location": {"latitude": 60.199, "longitude": 24.9784},
-},
-
 for activity in activities:
-    group = random.sample(group_ids, 1)
+    group = random.sample([kaapelitehdas_id], 1)
+    # group = kaapelitehdas_id
     user_group_ids = db.collection("users").where("groups", "array_contains", group[0]).get()
 
     userId = random.sample(user_group_ids, 1)[0].id

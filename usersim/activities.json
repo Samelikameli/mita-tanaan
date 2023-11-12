@@ -1,136 +1,65 @@
 {
-    "activities": [
-        {
-            "emoji": "🛹",
-            "name": "Cool tricks",
-            "description": "Tässä videossa näytetään miten tehdään kuperkeikka",
-            "owner": "Samu Huovinen",
-            "location": {
-                "latitude": 60.199,
-                "longitude": 24.9784
-            },
-            "votes": [
-                {
-                    "emoji": "🔥",
-                    "count": 12
-                },
-                {
-                    "emoji": "👍",
-                    "count": 5
-                }
-            ],
-            "time":"after-school"
-        },
-        {
-            "emoji": "🐆",
-            "name": "Playing with animal toys",
-            "description": "in forest",
-            "location": {
-                "latitude": 60.299,
-                "longitude": 24.9784
-            },
-            "votes": [
-                {
-                    "emoji": "🔥",
-                    "count": 12
-                },
-                {
-                    "emoji": "👍",
-                    "count": 5
-                }
-            ],
-            "owner": "Veeti Roponen",
-            "place": "Forest",
-            "time":"custom",
-            "customTime":"17:00"
-        },
-        {
-            "emoji": "⚽",
-            "name": "Football match",
-            "owner": "Veeti Roponen",
-            "description": "jalkapalloa yhdessä",
-            "location": {
-                "latitude": 60.1699,
-                "longitude": 24.9384
-            },
-            "votes": [
-                {
-                    "emoji": "🔥",
-                    "count": 12
-                },
-                {
-                    "emoji": "👍",
-                    "count": 5
-                }
-            ],
-            "time":"custom",
-            "customTime":"13:00"
-        },
-        {
-            "emoji": "⚽",
-            "name": "Football after school?",
-            "owner": "Artur Skwarek",
-            "place": "Koulun piha",
-            "time": "after-school",
-            "customTime": null,
-            "votes": [
-                {
-                    "emoji": "🔥",
-                    "count": 12
-                },
-                {
-                    "emoji": "👍",
-                    "count": 5
-                }
-            ],
-            "location": {
-                "latitude": 60.1699,
-                "longitude": 24.9384
-            }
-        },
-        {
-            "emoji": "🏒",
-            "name": "Ice hockey practice together",
-            "owner": "Artur Skwarek",
-            "place": "Rink at school",
-            "time": "after-school",
-            "customTime": null,
-            "votes": [
-                {
-                    "emoji": "🔥",
-                    "count": 12
-                },
-                {
-                    "emoji": "👍",
-                    "count": 5
-                }
-            ],
-            "location": {
-                "latitude": 60.1699,
-                "longitude": 24.9384
-            }
-        },
-        {
-            "emoji": "🛹",
-            "name": "Skateboarding at the mall",
-            "owner": "Veeti Roponen",
-            "place": "Shop Shop Mall",
-            "time": "custom",
-            "customTime": "16:00",
-            "votes": [
-                {
-                    "emoji": "🔥",
-                    "count": 12
-                },
-                {
-                    "emoji": "👍",
-                    "count": 5
-                }
-            ],
-            "location": {
-                "latitude": 60.1699,
-                "longitude": 24.9384
-            }
-        }
-        ]
+  "activities": [
+    {
+      "emoji": "🛹",
+      "name": "Cool tricks",
+      "description": "Make a backflip",
+      "owner": "Samu Huovinen",
+      "place": "Skate park",
+      "location": {
+        "latitude": 60.199,
+        "longitude": 24.9784
+      },
+      "time": "after-school"
+    },
+    {
+      "emoji": "⚽",
+      "name": "Football match",
+      "owner": "Veeti Roponen",
+      "description": "jalkapalloa yhdessä",
+      "location": {
+        "latitude": 60.1699,
+        "longitude": 24.9384
+      },
+      "time": "custom",
+      "customTime": "13:00"
+    },
+    {
+      "emoji": "🍺",
+      "name": "Beer after Junction",
+      "owner": "Artur Skwarek",
+      "place": "Karhu Ministeri",
+      "time": "after-school",
+      "customTime": null,
+      "location": {
+        "latitude": 60.1699,
+        "longitude": 24.9384
+      }
+    },
+
+    {
+      "emoji": "🛹",
+      "name": "Skateboarding at the mall",
+      "owner": "Veeti Roponen",
+      "place": "Shop Shop Mall",
+      "time": "custom",
+      "customTime": "16:00",
+      "location": {
+        "latitude": 60.1699,
+        "longitude": 24.9384
+      }
+    },
+    {
+      "emoji": "🏒",
+      "name": "Ice hockey practice together",
+      "owner": "Artur Skwarek",
+      "place": "Rink at school",
+      "time": "after-school",
+      "customTime": null,
+      "location": {
+        "latitude": 60.1699,
+        "longitude": 24.9384
+      }
     }
+  ]
+}

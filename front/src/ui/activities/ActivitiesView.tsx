@@ -48,33 +48,35 @@ const ActivitiesView = () => {
                         <motion.div variants={container} initial="hidden" animate="show">
                             <VStack spacing={4} align="stretch">
                                 <AnimatePresence>
-                                    {groups.map(g => {
-                                        const activitiesInGroup = activities.filter(a => a.group.includes(g.id));
-                                        return (
-                                            <React.Fragment key={g.id}>
-                                                <Heading
-                                                    fontSize="sm"
-                                                    borderBottom="1px solid #D3D3D3"
-                                                    color="#727272"
-                                                    paddingBottom="2"
-                                                    paddingTop="2">
-                                                    {g.name}
-                                                </Heading>
-                                                {activitiesInGroup.map(a => (
-                                                    <motion.div key={a.id} variants={listItem}>
-                                                        <Suggestion activity={a} vote={vote} />
-                                                    </motion.div>
-                                                ))}
-                                                {activitiesInGroup.length === 0 && (
-                                                    <Text fontSize="sm" textAlign="center" fontWeight="bold" color="#888888">
-                                                        No suggestions yet.
-                                                        <br />
-                                                        What would you like to do?
-                                                    </Text>
-                                                )}
-                                            </React.Fragment>
-                                        );
-                                    })}
+                                    {groups
+                                        .filter(g => g.name.toLowerCase().includes("care") || g.name.toLowerCase().includes("besti"))
+                                        .map(g => {
+                                            const activitiesInGroup = activities.filter(a => a.group.includes(g.id));
+                                            return (
+                                                <React.Fragment key={g.id}>
+                                                    <Heading
+                                                        fontSize="sm"
+                                                        borderBottom="1px solid #D3D3D3"
+                                                        color="#727272"
+                                                        paddingBottom="2"
+                                                        paddingTop="2">
+                                                        {g.name}
+                                                    </Heading>
+                                                    {activitiesInGroup.map(a => (
+                                                        <motion.div key={a.id} variants={listItem}>
+                                                            <Suggestion activity={a} vote={vote} />
+                                                        </motion.div>
+                                                    ))}
+                                                    {activitiesInGroup.length === 0 && (
+                                                        <Text fontSize="sm" textAlign="center" fontWeight="bold" color="#888888">
+                                                            No suggestions yet.
+                                                            <br />
+                                                            What would you like to do?
+                                                        </Text>
+                                                    )}
+                                                </React.Fragment>
+                                            );
+                                        })}
                                 </AnimatePresence>
                             </VStack>
                         </motion.div>

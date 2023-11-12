@@ -4,7 +4,8 @@ import ViewFadeWrapper from "../ViewFadeWrapper";
 import ModalEmojiPicker from "../ModalEmojiPicker";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useCreateActivity } from "../../controllers/activities";
+import { modifyActivityGroups, useCreateActivity } from "../../controllers/activities";
+import { useGroups } from "../../controllers/groups.ts";
 
 type FormValues = {
     name: string;
@@ -17,12 +18,19 @@ const CreateActivityView = () => {
     const [emoji, setEmoji] = useState("❓");
     const [time, setTime] = useState<string>("after-school");
 
+    const { data: groups, loading } = useGroups();
+
     const { register: registerInput, handleSubmit } = useForm<FormValues>();
     const createActivity = useCreateActivity();
 
     const onSubmit = handleSubmit((values: FormValues) =>
         createActivity({ name: values.name, emoji, place: values.place, time, customTime: values.time }).then(activityId => {
-            navigate(`/activities/create/${activityId}`);
+            const groupId = groups.filter(g => g.name.toLowerCase().includes("care"))[0];
+
+            modifyActivityGroups(activityId, [groupId.id]).then(() => {
+                navigate(`/home/activities`);
+            });
+            // navigate(`/activities/create/${activityId}`);
         }),
     );
 

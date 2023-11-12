@@ -120,7 +120,7 @@ const useCreateActivity = () => {
 
     const randomVote = emoji => {
         const res = {};
-        const amount = 1 + Math.floor(Math.random() * 4);
+        const amount = Math.floor(Math.random() * 3);
         for (let i = 1; i <= amount; ++i) {
             res[`_${emoji}`.repeat(i)] = emoji;
         }
