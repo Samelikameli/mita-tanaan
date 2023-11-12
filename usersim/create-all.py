@@ -108,7 +108,7 @@ for activity in activities:
     votes = {}
     print(user_ids)
     for i in random.sample(user_ids, 8):
-        votes[i] = random.choice(["👍", "🔥", "😂"])
+        votes[i] = random.choice(["👍", "🔥", "😂", "💻"])
 
     a = {
         "userId": userId,
