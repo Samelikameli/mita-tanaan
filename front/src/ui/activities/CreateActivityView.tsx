@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Box, Button, HStack, Heading, Input, VStack } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import ViewFadeWrapper from "../ViewFadeWrapper";

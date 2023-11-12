@@ -3,10 +3,10 @@ import ViewFadeWrapper, { PAGE_CHANGE_ANIM } from "../ViewFadeWrapper.tsx";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-const MyCard = ({ text, to }: { text: string; to: string }) => {
+const MyCard = ({ text, to, bg }: { text: string; to: string; bg: string }) => {
     return (
         <Link to={to}>
-            <Card mx={4} p={4} background="linear-gradient(0deg, #0070F3, #3993FC)" color="white" height="20vh" justifyContent="center">
+            <Card mx={4} p={4} background={bg} color="white" height="20vh" justifyContent="center" borderRadius="30">
                 <Heading fontSize="lg" textAlign="center">
                     {text}
                 </Heading>
@@ -41,10 +41,10 @@ const CreateView = () => {
             <VStack height="100%" alignItems="stretch" spacing="0" justifyContent="space-between" onDoubleClick={() => setShowOngoing(i => i + 1)}>
                 {showOngoing > 0 ? <OngoingNotification /> : <span></span>}
                 <SlideFade in={true} offsetX={100} offsetY={0} delay={PAGE_CHANGE_ANIM}>
-                    <MyCard text={"What are we doing today?"} to="/home/activities" />
+                    <MyCard text={"What are we doing today?"} to="/home/activities" bg="var(--grad2, linear-gradient(180deg, #E000F3 0%, #6B00F3 100%));" />
                 </SlideFade>
                 <SlideFade in={true} offsetX={100} offsetY={0} delay={PAGE_CHANGE_ANIM + 0.4}>
-                    <MyCard text={"Start a challenge"} to="/home/challenges" />
+                    <MyCard text={"Start a challenge"} to="/home/challenges" bg="var(--grad, linear-gradient(180deg, #00F3E4 0%, #3987FC 100%));" />
                 </SlideFade>
                 <span></span>
             </VStack>
