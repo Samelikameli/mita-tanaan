@@ -40,7 +40,7 @@ const ActivitiesView = () => {
                 <Box px={4} pb={4} background={"white"} filter={"drop-shadow(10px, 10px, 2px, black);"}>
                     {/*<Avatar small={true} animal={user.avatar} />*/}
                     <Heading fontSize="xl" paddingTop="5" align={"center"} style={{ fontWeight: "bold" }}>
-                        Activities
+                        What today?
                     </Heading>
 
                     {/*<Text fontSize="m" paddingBottom="4">*/}
