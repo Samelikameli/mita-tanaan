@@ -118,7 +118,7 @@ const Suggestion = (props: { activity: Activity; vote: (activityId: string, emoj
                 {votes.map(v => (
                     <EmojiCount vote={v} key={v.emoji} onClick={() => props.vote(props.activity.id, v.emoji, !v?.haveIVoted)} />
                 ))}
-                <ModalEmojiPicker size="xs" onChoose={(emoji) => {props.vote(props.activity.id, emoji, true)}} emoji="+" fontSize="1em"/>
+                <ModalEmojiPicker size="xs" onChoose={(emoji) => {props.vote(props.activity.id, emoji, true)}} emoji="+" fontSize="1em" reaction={true}/>
                 <Box flex="1"></Box>
                 <Link to={`/activities/${id}`}>
                     <Button size="xs" colorScheme="blue">
