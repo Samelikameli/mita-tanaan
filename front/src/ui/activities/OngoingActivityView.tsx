@@ -73,7 +73,7 @@ const OngoingActivityView = () => {
                                     mapLib={mapboxgl}
                                     style={{ width: "100%", height: "100%" }}
                                     initialViewState={{ longitude: 25, latitude: 60, zoom: 3.5 }}
-                                    viewState={{ latitude: user?.location.latitude, longitude: user?.location.longitude }}
+                                    // viewState={{ latitude: user?.location.latitude, longitude: user?.location.longitude }}
                                     mapboxAccessToken={"pk.eyJ1IjoidmVlZXRpIiwiYSI6ImNrMWdwandlODBkMHIzbmw4a241Y3hubWgifQ.4c85YNclymjgZ0Fw8pm4Ng"}
                                     mapStyle={"mapbox://styles/veeeti/clotyihro00s701nzcxkx8mho"}>
                                     {activity.location && (

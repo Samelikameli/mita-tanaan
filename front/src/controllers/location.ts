@@ -15,7 +15,10 @@ const useAllUsersLocation = () => {
 
         const unsubscribe = onSnapshot(q, (snapshot: QuerySnapshot<DocumentData>) => {
             const updatedUsers: User[] = [];
-            snapshot.forEach((doc: QueryDocumentSnapshot<unknown>) => updatedUsers.push(doc.data() as User));
+            snapshot.forEach((doc: QueryDocumentSnapshot<unknown>) => {
+                console.log(doc.id);
+                updatedUsers.push({ id: doc.id, ...doc.data(), avatar: `human${(doc.id.charCodeAt(0) % 4) + 1}` } as User);
+            });
 
             setAllLocations(updatedUsers);
             console.log("Updated users!");
