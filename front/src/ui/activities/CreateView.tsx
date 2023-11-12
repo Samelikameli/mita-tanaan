@@ -41,7 +41,7 @@ const CreateView = () => {
             <VStack height="100%" alignItems="stretch" spacing="0" justifyContent="space-between" onDoubleClick={() => setShowOngoing(i => i + 1)}>
                 {showOngoing > 0 ? <OngoingNotification /> : <span></span>}
                 <SlideFade in={true} offsetX={100} offsetY={0} delay={PAGE_CHANGE_ANIM}>
-                    <MyCard text={"What are we doing today?"} to="/activities/create" />
+                    <MyCard text={"What are we doing today?"} to="/home/activities" />
                 </SlideFade>
                 <SlideFade in={true} offsetX={100} offsetY={0} delay={PAGE_CHANGE_ANIM + 0.4}>
                     <MyCard text={"Start a challenge"} to="/home/challenges" />
