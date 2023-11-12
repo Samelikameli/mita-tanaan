@@ -115,15 +115,25 @@ const useCreateActivity = () => {
     const user = useContext(UserContext);
     if (!user) throw Error("User not defined in useCreateActivity");
 
+    const randomVote = emoji => {
+        const res = {};
+        const amount = 1 + Math.floor(Math.random() * 4);
+        for (let i = 1; i <= amount; ++i) {
+            res[`_${emoji}`.repeat(i)] = emoji;
+        }
+        return res;
+    };
+
     return async (activity: { name: string; emoji: string; place: string; time: string; customTime: string | undefined }): Promise<string> => {
-        const initialVotes: VoteCount = { emoji: "👍", count: 1 };
+        const votes = { ...randomVote("🚀"), ...randomVote("🔥"), ...randomVote("👍"), ...randomVote("💻") };
+        console.log(votes);
         const id = await writeActivity({
             name: activity.name,
             emoji: activity.emoji,
             place: activity.place,
             time: activity.time,
             customTime: activity.customTime || null,
-            votes: JSON.stringify([initialVotes]),
+            votes: votes,
             group: [],
             owner: user?.name,
         });
