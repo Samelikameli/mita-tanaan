@@ -33,8 +33,8 @@ const HomeView = () => {
             <Box style={{ flex: 1, position: "relative", background: "rgba(200,200,200,0.7)"}}>
                 <AnimatePresence>{tabIndex === 0 ? <ActivitiesView /> : tabIndex === 1 ? <CreateView /> : <ChallengesView />}</AnimatePresence>
             </Box>
-
-            <BottomNavigation
+            <div style={{background:"rgba(200,200,200,0.7)"}}>
+            <BottomNavigation   
                 value={tabIndex}
                 onChange={changeTab}
                 colorScheme={"white"}
@@ -62,6 +62,7 @@ const HomeView = () => {
                     </BottomNavigationLabel>
                 </BottomNavigationItem>
             </BottomNavigation>
+            </div>
         </Box>
     );
 };
