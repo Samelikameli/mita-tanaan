@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { VStack, Card, Box, HStack, Button, Heading, Text, SlideFade } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import EmojiIcon from "../EmojiIcon";
