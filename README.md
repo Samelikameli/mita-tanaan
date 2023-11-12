@@ -1,8 +1,10 @@
-# EEPPISTÄ PÖHINÄÄ
+# What are you going to do today?
 
-# LAPSET + LIIKUNTA
+## Frontend
 
-# Frontend
+SPA web application, designed for mobile phones. Uses React, TypeScript and Chakra UI component library. Connects directly to Firestore to access and modify data.
+
+### Development
 
 Use Node 20
 
@@ -17,4 +19,8 @@ npm install
 npm run dev
 ```
 
-List of available icons: https://react-icons.github.io/react-icons/icons?name=fi
+## Backend
+
+The current backend is used to prepopulate Firebase's Firestore with example data, and to simulate movement of other users.
+
+For development you need Firebase credentials and access, ask from the team.
