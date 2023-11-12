@@ -10,7 +10,16 @@ import { theme } from "./theme.ts";
 
 import "mapbox-gl/dist/mapbox-gl.css";
 
-const app = initializeApp(JSON.parse(import.meta.env.VITE_FIREBASE_AUTH ?? ""));
+const firebaseConfig = {
+    apiKey: "AIzaSyAz1eHqLK1vPMEKJX58ewQyQte1FV1ijDo",
+    authDomain: "junction-what-today.firebaseapp.com",
+    projectId: "junction-what-today",
+    storageBucket: "junction-what-today.appspot.com",
+    messagingSenderId: "1009770398432",
+    appId: "1:1009770398432:web:1ee720f178c7ded8ac4685",
+};
+
+const app = initializeApp(firebaseConfig);
 
 // Create a client
 const queryClient = new QueryClient();

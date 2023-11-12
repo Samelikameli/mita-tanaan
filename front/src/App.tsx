@@ -30,9 +30,7 @@ const App = () => {
         }
     }, [loading, register, userExists]);
 
-    if (loading) return <Box background="background.100" height="100%"></Box>;
-
-    if (!userExists) return <Register register={register} />;
+    if (loading || !userExists) return <Box background="background.100" height="100%"></Box>;
 
     return (
         <UserContext.Provider value={user}>
