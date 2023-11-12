@@ -39,7 +39,7 @@ const useUserFetching = (): {
                     const data = snapshot.data();
                     const id = snapshot.id;
                     console.log(data);
-                    setUser({ ...data, id } as User);
+                    setUser({ ...data, id, avatar: `human${(id.charCodeAt(0) % 4) + 1}` } as User);
                 }
                 setLoading(false);
             });

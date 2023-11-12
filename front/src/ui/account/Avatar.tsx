@@ -10,6 +10,10 @@ import pig from "../../assets/pig_face.png";
 import tiger from "../../assets/tiger_face.png";
 import giraffe from "../../assets/giraffe.png";
 import pos from "../../assets/mypos.png";
+import human1 from "../../assets/Property 1=Default.png";
+import human2 from "../../assets/Property 1=Variant2.png";
+import human3 from "../../assets/Property 1=Variant3.png";
+import human4 from "../../assets/Property 1=Variant4.png";
 
 const faces = {
     dog,
@@ -24,6 +28,10 @@ const faces = {
     tiger,
     giraffe,
     pos,
+    human1,
+    human2,
+    human3,
+    human4,
 };
 
 import { Image } from "@chakra-ui/react";
@@ -38,7 +46,7 @@ const Avatar = ({ animal, small }: Props) => {
         <Image
             filter={`drop-shadow(0px 0px ${small ? 1 : 5}px gray)`}
             src={faces[animal] as string}
-            boxSize={animal === "giraffe" ? "64px" : small ? "48px" : "160px"}
+            boxSize={animal === "giraffe" ? "64px" : small ? "32px" : "160px"}
             objectFit={"cover"}></Image>
     );
 };
