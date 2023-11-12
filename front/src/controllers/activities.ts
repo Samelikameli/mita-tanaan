@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { collection, doc, getFirestore, query, setDoc, updateDoc } from "@firebase/firestore";
+import { collection, doc, getFirestore, query, setDoc, updateDoc, deleteField } from "@firebase/firestore";
 import { useContext, useEffect, useState } from "react";
 import { firebaseApp } from "../main";
 import UserContext from "../usercontext";
@@ -87,9 +87,15 @@ const useActivities = () => {
         return unsubscribe;
     }, [db, user?.id]);
 
-    const vote = async (activityId: string, emoji: string) => {
+    const vote = async (activityId: string, emoji: string, vote?: boolean) => {
+        vote = vote ?? true;
+
         const ref = doc(db, "activities", activityId);
-        await updateDoc(ref, `votes.${user?.id}`, emoji);
+        if (vote) {
+            await updateDoc(ref, `votes.${user?.id}`, emoji);
+        } else {
+            await updateDoc(ref, `votes.${user?.id}`, deleteField());
+        }
         // await setDoc(ref, { votes:  }, { merge: true });
     };
 

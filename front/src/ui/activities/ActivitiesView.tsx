@@ -92,7 +92,7 @@ const ActivitiesView = () => {
     );
 };
 
-const Suggestion = (props: { activity: Activity; vote: (activityId: string, emoji: string) => Promise<void> }) => {
+const Suggestion = (props: { activity: Activity; vote: (activityId: string, emoji: string, vote?: boolean) => Promise<void> }) => {
     const { id, name, owner, votes, time } = props.activity;
     const { emoji: timeEmoji } = timeModeToEmoji(time);
     return (
@@ -113,7 +113,7 @@ const Suggestion = (props: { activity: Activity; vote: (activityId: string, emoj
             </Link>
             <HStack spacing={1} marginTop="1rem" flexWrap="wrap">
                 {votes.map(v => (
-                    <EmojiCount vote={v} key={v.emoji} onClick={() => props.vote(props.activity.id, v.emoji)} />
+                    <EmojiCount vote={v} key={v.emoji} onClick={() => props.vote(props.activity.id, v.emoji, !v?.haveIVoted)} />
                 ))}
                 <Box flex="1"></Box>
                 <Link to={`/activities/${id}`}>
