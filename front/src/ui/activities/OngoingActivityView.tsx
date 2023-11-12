@@ -11,9 +11,9 @@ import Avatar from "../account/Avatar.tsx";
 
 import "./OngoingActivity.css";
 import { useActivities } from "../../controllers/activities.ts";
-import { timeModeToEmoji } from "../utils.tsx";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../../usercontext.tsx";
+import ActivityDetails from "./ActivityDetails.tsx";
 
 const OngoingActivityView = () => {
     const user = useContext(UserContext);
@@ -24,7 +24,6 @@ const OngoingActivityView = () => {
     const navigate = useNavigate();
 
     const activity = isLoading ? null : activities[0];
-    const timeModeToEmoji1 = timeModeToEmoji(activity?.time || null);
 
     useEffect(() => {
         if (activity?.ongoing) {
@@ -41,20 +40,7 @@ const OngoingActivityView = () => {
     return (
         <Flex direction={"column"} style={{ height: "100%" }} gap={10}>
             <GridItem flex={"1"} mt={10} mx={4}>
-                <Text style={{ fontWeight: "bold" }}>What are we doing today?</Text>
-                <Text style={{ fontSize: "120%" }}>Class football match after school</Text>
-                <br />
-                <Text style={{ fontWeight: "900" }}>When?</Text>
-                <Text style={{ fontSize: "120%" }}>
-                    {timeModeToEmoji1.emoji} {activity.time === "custom" ? activity.customTime : timeModeToEmoji1.name}
-                </Text>
-                <br />
-                <Text style={{ fontWeight: "900" }}>Who's coming?</Text>
-                <Flex>
-                    {["dog", "cat", "panda"].map(a => (
-                        <Avatar animal={a} small={true} />
-                    ))}
-                </Flex>
+                <ActivityDetails activity={activity} />
             </GridItem>
             <GridItem flex={"1"} style={{ height: "100%" }}>
                 <Card style={{ height: "100%" }}>
