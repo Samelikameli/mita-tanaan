@@ -127,43 +127,41 @@ const Suggestion = (props: { activity: Activity; vote: (activityId: string, emoj
     const { emoji: timeEmoji } = timeModeToEmoji(time);
     return (
         <Card padding={2} borderRadius={20} margin={0}>
-            <Link to={`/activities/${id}`}>
-                <HStack>
-                    <EmojiIcon>{props.activity.emoji}</EmojiIcon>
-                    <VStack alignItems={"flex-start"}>
-                        <Link to={`/activities/${id}`}>
-                            <HStack>
-                                <VStack flex="1" alignItems="right" spacing={0}>
-                                    <Text fontSize="0.9rem" style={{ fontWeight: "bold" }}>
-                                        {name}
-                                    </Text>
-                                    <Text fontSize="0.7rem" color="#555555">
-                                        {owner}
-                                    </Text>
-                                </VStack>
-                                <Text fontSize="0.8rem" color="#555555" alignSelf="start" padding={1}>
-                                    {timeEmoji}
+            <HStack>
+                <EmojiIcon>{props.activity.emoji}</EmojiIcon>
+                <VStack alignItems={"flex-start"}>
+                    <Link to={`/activities/${id}`}>
+                        <HStack>
+                            <VStack flex="1" alignItems="right" spacing={0}>
+                                <Text fontSize="0.9rem" style={{ fontWeight: "bold" }}>
+                                    {name}
                                 </Text>
-                            </HStack>
-                        </Link>
-                        <HStack spacing={1} marginTop="-0.4rem" flexWrap="wrap">
-                            {votes.map(v => (
-                                <EmojiCount vote={v} key={v.emoji} onClick={() => props.vote(props.activity.id, v.emoji, !v?.haveIVoted)} />
-                            ))}
-                            <ModalEmojiPicker
-                                size="xs"
-                                onChoose={emoji => {
-                                    props.vote(props.activity.id, emoji, true);
-                                }}
-                                emoji="+"
-                                fontSize="1em"
-                                reaction={true}
-                            />
-                            <Box flex="1"></Box>
+                                <Text fontSize="0.7rem" color="#555555">
+                                    {owner}
+                                </Text>
+                            </VStack>
+                            <Text fontSize="0.8rem" color="#555555" alignSelf="start" padding={1}>
+                                {timeEmoji}
+                            </Text>
                         </HStack>
-                    </VStack>
-                </HStack>
-            </Link>
+                    </Link>
+                    <HStack spacing={1} marginTop="-0.4rem" flexWrap="wrap">
+                        {votes.map(v => (
+                            <EmojiCount vote={v} key={v.emoji} onClick={() => props.vote(props.activity.id, v.emoji, !v?.haveIVoted)} />
+                        ))}
+                        <ModalEmojiPicker
+                            size="xs"
+                            onChoose={emoji => {
+                                props.vote(props.activity.id, emoji, true);
+                            }}
+                            emoji="+"
+                            fontSize="1em"
+                            reaction={true}
+                        />
+                        <Box flex="1"></Box>
+                    </HStack>
+                </VStack>
+            </HStack>
         </Card>
     );
 };
