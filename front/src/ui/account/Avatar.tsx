@@ -39,14 +39,15 @@ import { Image } from "@chakra-ui/react";
 type Props = {
     animal: keyof faces;
     small?: boolean;
+    width?: string;
 };
-const Avatar = ({ animal, small }: Props) => {
+const Avatar = ({ animal, small, width }: Props) => {
     if (faces[animal] == null) console.log(animal);
     return (
         <Image
             filter={`drop-shadow(0px 0px ${small ? 1 : 5}px gray)`}
             src={faces[animal] as string}
-            boxSize={animal === "giraffe" ? "64px" : small ? "32px" : "160px"}
+            boxSize={width ?? (animal === "giraffe" ? "64px" : small ? "32px" : "160px")}
             objectFit={"cover"}></Image>
     );
 };
