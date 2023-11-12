@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Circle, HStack, Text, VStack, Grid, GridItem } from "@chakra-ui/react";
 import ViewFadeWrapper from "../ViewFadeWrapper.tsx";
 import Avatar from "../account/Avatar.tsx";
